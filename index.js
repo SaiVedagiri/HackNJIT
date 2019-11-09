@@ -50,15 +50,12 @@ express()
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['/output.png'],
+        // mediaUrl: ['https://api.screenshotmachine.com/?key=95b49b&url=https%3A%2F%2Fwww.google.com%2Fsearch%3Fsource%3Dhp%26ei%3DIDXHXb3GLsS7ggeDlb-4Dw%26q\
+        // %3Dbananas%26oq%3Dbananas%26gs_l%3Dpsy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug%26ved%3D0ahUKEwi91qzTjt7lAhXEneAKHYP\
+        // KD_cQ4dUDCAg%26uact%3D5&dimension=1366xfull&device=desktop&format=png&cacheLimit=0&delay=200&zoom=100.png'],
         to: '+19179404729'
       })
       .then(message => console.log(message.sid));
-  })
-  .get('/article', function (req, res) {
-    makeRequestArticle("https://api.screenshotmachine.com/?key=95b49b&url=https%3A%2F%2Fwww.google.com%2Fsearch%3Fsource%3Dhp%26ei%3DIDXHXb3GLsS7ggeDlb-4Dw%26q\
-    %3Dbananas%26oq%3Dbananas%26gs_l%3Dpsy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug%26ved%3D0ahUKEwi91qzTjt7lAhXEneAKHYP\
-    KD_cQ4dUDCAg%26uact%3D5&dimension=1366xfull&device=desktop&format=png&cacheLimit=0&delay=200&zoom=100", res);
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();

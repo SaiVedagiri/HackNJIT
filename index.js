@@ -17,24 +17,6 @@ let url4;
 let url5;
 let fromNum;
 
-app.post('/sms', (req, res) => {
-  const twiml = new MessagingResponse();
-  //console.log(req);
-  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
-  const client = require('twilio')(accountSid, authToken);
-  client.messages.list({ limit: 1 })
-    .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
-  //twiml.message(myMessage);
-  //console.log(myMessage);
-  //res.writeHead(200, { 'Content-Type': 'text/xml' });
-  //res.end(twiml.toString());
-});
-
-http.createServer(app).listen(1337, () => {
-  console.log('Express server listening on port 1337');
-});
-
 function sendMessage(message, req, res) {
   const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
   const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';

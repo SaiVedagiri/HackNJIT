@@ -30,7 +30,7 @@ express()
 
     client.messages
       .create({
-        body: req,
+        body: req.body,
         from: '+12015847119',
         to: '+18484681542'
       })

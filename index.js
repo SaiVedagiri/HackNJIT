@@ -40,7 +40,7 @@ express()
   // else
   // {
     var URL = 'https://api.wolframalpha.com/v1/result?i=${input}%3F&appid=7PPG9H-H5KLEVRLK2';
-    $.getJSON(URL, function (data)
+    $.getJSON(URL, function (data))
 
   // }
   /*

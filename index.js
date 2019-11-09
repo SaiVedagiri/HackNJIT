@@ -221,7 +221,7 @@ async function makeRequestArticle(url, res) {
     const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
     const client = require('twilio')(accountSid, authToken);
 
-    sendMessage(banana, req, res);
+    await sendMessage(banana, req, res);
 
   });
 

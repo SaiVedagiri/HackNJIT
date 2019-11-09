@@ -4,6 +4,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const path = require('path')
 var request = require("request");
 var unirest = require("unirest");
+var screenshotmachine = require('screenshotmachine');
 
 const PORT = process.env.PORT || 5000
 const API_KEY = "AIzaSyDhkJ2yT06tRwXIMEUp9xaj2-LxOnKyvGY";
@@ -17,6 +18,7 @@ let url4;
 let url5;
 let fromNum;
 
+getImage();
 function sendMessage(message, req, res) {
   const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
   const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
@@ -46,14 +48,18 @@ express()
 
     client.messages
       .create({
-        body: "Hi Josh",
+        body: "https://api.screenshotmachine.com/?key=95b49b&url=https%3A%2F%2Fwww.google.com%2Fsearch%3Fsource%3Dhp%26ei%3DIDXHXb3GLsS7ggeDlb-4Dw%26q\
+        %3Dbananas%26oq%3Dbananas%26gs_l%3Dpsy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug%26ved%3D0ahUKEwi91qzTjt7lAhXEneAKHYP\
+        KD_cQ4dUDCAg%26uact%3D5&dimension=1366xfull&device=desktop&format=png&cacheLimit=0&delay=200&zoom=100",
         from: '+12015847119',
         to: '+19179404729'
       })
       .then(message => res.send("Hi Josh"));
   })
   .get('/article', function (req, res) {
-    makeRequestArticle("https://www.cnn.com/2019/11/09/us/las-vegas-abduction-father-daughter-charged/index.html", res);
+    makeRequestArticle("https://api.screenshotmachine.com/?key=95b49b&url=https%3A%2F%2Fwww.google.com%2Fsearch%3Fsource%3Dhp%26ei%3DIDXHXb3GLsS7ggeDlb-4Dw%26q\
+    %3Dbananas%26oq%3Dbananas%26gs_l%3Dpsy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug%26ved%3D0ahUKEwi91qzTjt7lAhXEneAKHYP\
+    KD_cQ4dUDCAg%26uact%3D5&dimension=1366xfull&device=desktop&format=png&cacheLimit=0&delay=200&zoom=100", res);
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
@@ -224,4 +230,35 @@ async function makeRequestArticle(url, res) {
   });
 
 
+}
+
+
+function getImage()
+{
+var customerKey = '95b49b';
+    secretPhrase = ''; //leave secret phrase empty, if not needed
+    options = {
+      //mandatory parameter
+      url : 'https://www.google.com/search?source=hp&ei=IDXHXb3GLsS7ggeDlb-4Dw&q=bananas&oq=bananas&gs_l=psy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug&ved=0ahUKEwi91qzTjt7lAhXEneAKHYPKD_cQ4dUDCAg&uact=5',
+      // all next parameters are optional, see our website screenshot API guide for more details
+      dimension : '1366xfull', // or "1366xfull" for full length screenshot
+      device : 'desktop',
+      format: 'png',
+      cacheLimit: '0',
+      delay: '200',
+      zoom: '100'
+    }
+
+
+var apiUrl = screenshotmachine.generateScreenshotApiUrl(customerKey, secretPhrase, options);
+
+//put link to your html code
+console.log('<img src="' + apiUrl + '">');
+
+//or save screenshot as an image
+var fs = require('fs');
+var output = 'output.png';
+screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', function() {
+  console.log('Screenshot saved as ' + output);
+}));
 }

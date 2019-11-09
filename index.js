@@ -12,7 +12,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', function (req, res) {
-     res.send(req);
+     res.send(req.body);
   })
   .get('/api', function(req, res) {
     const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';

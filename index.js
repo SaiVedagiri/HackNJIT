@@ -48,10 +48,11 @@ express()
 
     client.messages
       .create({
-        body: "https://api.screenshotmachine.com/?key=95b49b&url=https%3A%2F%2Fwww.google.com%2Fsearch%3Fsource%3Dhp%26ei%3DIDXHXb3GLsS7ggeDlb-4Dw%26q\
-        %3Dbananas%26oq%3Dbananas%26gs_l%3Dpsy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug%26ved%3D0ahUKEwi91qzTjt7lAhXEneAKHYP\
-        KD_cQ4dUDCAg%26uact%3D5&dimension=1366xfull&device=desktop&format=png&cacheLimit=0&delay=200&zoom=100",
+        body: "Website Image",
         from: '+12015847119',
+        mediaUrl: ['https://api.screenshotmachine.com/?key=95b49b&url=https%3A%2F%2Fwww.google.com%2Fsearch%3Fsource%3Dhp%26ei%3DIDXHXb3GLsS7ggeDlb-4Dw%26q\
+        %3Dbananas%26oq%3Dbananas%26gs_l%3Dpsy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug%26ved%3D0ahUKEwi91qzTjt7lAhXEneAKHYP\
+        KD_cQ4dUDCAg%26uact%3D5&dimension=1366xfull&device=desktop&format=png&cacheLimit=0&delay=200&zoom=100'],
         to: '+19179404729'
       })
       .then(message => res.send("Hi Josh"));
@@ -239,7 +240,7 @@ var customerKey = '95b49b';
     secretPhrase = ''; //leave secret phrase empty, if not needed
     options = {
       //mandatory parameter
-      url : 'https://www.google.com/search?source=hp&ei=IDXHXb3GLsS7ggeDlb-4Dw&q=bananas&oq=bananas&gs_l=psy-ab.3..0l10.1345.1905..2025...0.0..0.73.334.6......0....1..gws-wiz.......0i131.AJ-LpJFc9ug&ved=0ahUKEwi91qzTjt7lAhXEneAKHYPKD_cQ4dUDCAg&uact=5',
+      url : 'medicalnewstoday.com',
       // all next parameters are optional, see our website screenshot API guide for more details
       dimension : '1366xfull', // or "1366xfull" for full length screenshot
       device : 'desktop',

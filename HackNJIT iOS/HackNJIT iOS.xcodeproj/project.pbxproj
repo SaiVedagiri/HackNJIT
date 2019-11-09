@@ -7,27 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		428B05BA237719FE009D4EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B05B9237719FE009D4EA3 /* AppDelegate.swift */; };
-		428B05BC237719FE009D4EA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B05BB237719FE009D4EA3 /* SceneDelegate.swift */; };
-		428B05BE237719FE009D4EA3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B05BD237719FE009D4EA3 /* ViewController.swift */; };
-		428B05C1237719FE009D4EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 428B05BF237719FE009D4EA3 /* Main.storyboard */; };
-		428B05C323771A00009D4EA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 428B05C223771A00009D4EA3 /* Assets.xcassets */; };
-		428B05C623771A00009D4EA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 428B05C423771A00009D4EA3 /* LaunchScreen.storyboard */; };
+		428B062423772E74009D4EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B062323772E74009D4EA3 /* AppDelegate.swift */; };
+		428B062B23772E74009D4EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 428B062923772E74009D4EA3 /* Main.storyboard */; };
+		428B062D23772E76009D4EA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 428B062C23772E76009D4EA3 /* Assets.xcassets */; };
+		428B063023772E76009D4EA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 428B062E23772E76009D4EA3 /* LaunchScreen.storyboard */; };
+		428B063823773CDB009D4EA3 /* SearchOptionsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B063723773CDB009D4EA3 /* SearchOptionsTVC.swift */; };
+		428B063A23773CEE009D4EA3 /* LastImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B063923773CEE009D4EA3 /* LastImageVC.swift */; };
+		428B063C23773D00009D4EA3 /* SelectImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B063B23773D00009D4EA3 /* SelectImageVC.swift */; };
+		428B063E23773D30009D4EA3 /* ParametersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B063D23773D30009D4EA3 /* ParametersVC.swift */; };
+		428B064023774140009D4EA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B063F23774140009D4EA3 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		428B05B6237719FE009D4EA3 /* HackNJIT iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HackNJIT iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		428B05B9237719FE009D4EA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		428B05BB237719FE009D4EA3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		428B05BD237719FE009D4EA3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		428B05C0237719FE009D4EA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		428B05C223771A00009D4EA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		428B05C523771A00009D4EA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		428B05C723771A00009D4EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		428B062023772E74009D4EA3 /* HackNJIT iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HackNJIT iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		428B062323772E74009D4EA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		428B062A23772E74009D4EA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		428B062C23772E76009D4EA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		428B062F23772E76009D4EA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		428B063123772E76009D4EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		428B063723773CDB009D4EA3 /* SearchOptionsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOptionsTVC.swift; sourceTree = "<group>"; };
+		428B063923773CEE009D4EA3 /* LastImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastImageVC.swift; sourceTree = "<group>"; };
+		428B063B23773D00009D4EA3 /* SelectImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageVC.swift; sourceTree = "<group>"; };
+		428B063D23773D30009D4EA3 /* ParametersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersVC.swift; sourceTree = "<group>"; };
+		428B063F23774140009D4EA3 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		428B05B3237719FE009D4EA3 /* Frameworks */ = {
+		428B061D23772E74009D4EA3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -37,32 +43,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		428B05AD237719FE009D4EA3 = {
+		428B061723772E74009D4EA3 = {
 			isa = PBXGroup;
 			children = (
-				428B05B8237719FE009D4EA3 /* HackNJIT iOS */,
-				428B05B7237719FE009D4EA3 /* Products */,
+				428B062223772E74009D4EA3 /* HackNJIT iOS */,
+				428B062123772E74009D4EA3 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		428B05B7237719FE009D4EA3 /* Products */ = {
+		428B062123772E74009D4EA3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				428B05B6237719FE009D4EA3 /* HackNJIT iOS.app */,
+				428B062023772E74009D4EA3 /* HackNJIT iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		428B05B8237719FE009D4EA3 /* HackNJIT iOS */ = {
+		428B062223772E74009D4EA3 /* HackNJIT iOS */ = {
 			isa = PBXGroup;
 			children = (
-				428B05B9237719FE009D4EA3 /* AppDelegate.swift */,
-				428B05BB237719FE009D4EA3 /* SceneDelegate.swift */,
-				428B05BD237719FE009D4EA3 /* ViewController.swift */,
-				428B05BF237719FE009D4EA3 /* Main.storyboard */,
-				428B05C223771A00009D4EA3 /* Assets.xcassets */,
-				428B05C423771A00009D4EA3 /* LaunchScreen.storyboard */,
-				428B05C723771A00009D4EA3 /* Info.plist */,
+				428B063F23774140009D4EA3 /* SceneDelegate.swift */,
+				428B062323772E74009D4EA3 /* AppDelegate.swift */,
+				428B062923772E74009D4EA3 /* Main.storyboard */,
+				428B063D23773D30009D4EA3 /* ParametersVC.swift */,
+				428B063723773CDB009D4EA3 /* SearchOptionsTVC.swift */,
+				428B063923773CEE009D4EA3 /* LastImageVC.swift */,
+				428B063B23773D00009D4EA3 /* SelectImageVC.swift */,
+				428B062C23772E76009D4EA3 /* Assets.xcassets */,
+				428B062E23772E76009D4EA3 /* LaunchScreen.storyboard */,
+				428B063123772E76009D4EA3 /* Info.plist */,
 			);
 			path = "HackNJIT iOS";
 			sourceTree = "<group>";
@@ -70,13 +79,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		428B05B5237719FE009D4EA3 /* HackNJIT iOS */ = {
+		428B061F23772E74009D4EA3 /* HackNJIT iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 428B05CA23771A00009D4EA3 /* Build configuration list for PBXNativeTarget "HackNJIT iOS" */;
+			buildConfigurationList = 428B063423772E76009D4EA3 /* Build configuration list for PBXNativeTarget "HackNJIT iOS" */;
 			buildPhases = (
-				428B05B2237719FE009D4EA3 /* Sources */,
-				428B05B3237719FE009D4EA3 /* Frameworks */,
-				428B05B4237719FE009D4EA3 /* Resources */,
+				428B061C23772E74009D4EA3 /* Sources */,
+				428B061D23772E74009D4EA3 /* Frameworks */,
+				428B061E23772E74009D4EA3 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -84,25 +93,25 @@
 			);
 			name = "HackNJIT iOS";
 			productName = "HackNJIT iOS";
-			productReference = 428B05B6237719FE009D4EA3 /* HackNJIT iOS.app */;
+			productReference = 428B062023772E74009D4EA3 /* HackNJIT iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		428B05AE237719FE009D4EA3 /* Project object */ = {
+		428B061823772E74009D4EA3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Arya Tschand";
 				TargetAttributes = {
-					428B05B5237719FE009D4EA3 = {
+					428B061F23772E74009D4EA3 = {
 						CreatedOnToolsVersion = 11.1;
 					};
 				};
 			};
-			buildConfigurationList = 428B05B1237719FE009D4EA3 /* Build configuration list for PBXProject "HackNJIT iOS" */;
+			buildConfigurationList = 428B061B23772E74009D4EA3 /* Build configuration list for PBXProject "HackNJIT iOS" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -110,55 +119,58 @@
 				en,
 				Base,
 			);
-			mainGroup = 428B05AD237719FE009D4EA3;
-			productRefGroup = 428B05B7237719FE009D4EA3 /* Products */;
+			mainGroup = 428B061723772E74009D4EA3;
+			productRefGroup = 428B062123772E74009D4EA3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				428B05B5237719FE009D4EA3 /* HackNJIT iOS */,
+				428B061F23772E74009D4EA3 /* HackNJIT iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		428B05B4237719FE009D4EA3 /* Resources */ = {
+		428B061E23772E74009D4EA3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				428B05C623771A00009D4EA3 /* LaunchScreen.storyboard in Resources */,
-				428B05C323771A00009D4EA3 /* Assets.xcassets in Resources */,
-				428B05C1237719FE009D4EA3 /* Main.storyboard in Resources */,
+				428B063023772E76009D4EA3 /* LaunchScreen.storyboard in Resources */,
+				428B062D23772E76009D4EA3 /* Assets.xcassets in Resources */,
+				428B062B23772E74009D4EA3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		428B05B2237719FE009D4EA3 /* Sources */ = {
+		428B061C23772E74009D4EA3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				428B05BE237719FE009D4EA3 /* ViewController.swift in Sources */,
-				428B05BA237719FE009D4EA3 /* AppDelegate.swift in Sources */,
-				428B05BC237719FE009D4EA3 /* SceneDelegate.swift in Sources */,
+				428B063C23773D00009D4EA3 /* SelectImageVC.swift in Sources */,
+				428B063A23773CEE009D4EA3 /* LastImageVC.swift in Sources */,
+				428B063E23773D30009D4EA3 /* ParametersVC.swift in Sources */,
+				428B063823773CDB009D4EA3 /* SearchOptionsTVC.swift in Sources */,
+				428B062423772E74009D4EA3 /* AppDelegate.swift in Sources */,
+				428B064023774140009D4EA3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		428B05BF237719FE009D4EA3 /* Main.storyboard */ = {
+		428B062923772E74009D4EA3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				428B05C0237719FE009D4EA3 /* Base */,
+				428B062A23772E74009D4EA3 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		428B05C423771A00009D4EA3 /* LaunchScreen.storyboard */ = {
+		428B062E23772E76009D4EA3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				428B05C523771A00009D4EA3 /* Base */,
+				428B062F23772E76009D4EA3 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -166,7 +178,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		428B05C823771A00009D4EA3 /* Debug */ = {
+		428B063223772E76009D4EA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -226,7 +238,7 @@
 			};
 			name = Debug;
 		};
-		428B05C923771A00009D4EA3 /* Release */ = {
+		428B063323772E76009D4EA3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -280,7 +292,7 @@
 			};
 			name = Release;
 		};
-		428B05CB23771A00009D4EA3 /* Debug */ = {
+		428B063523772E76009D4EA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -298,7 +310,7 @@
 			};
 			name = Debug;
 		};
-		428B05CC23771A00009D4EA3 /* Release */ = {
+		428B063623772E76009D4EA3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -319,25 +331,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		428B05B1237719FE009D4EA3 /* Build configuration list for PBXProject "HackNJIT iOS" */ = {
+		428B061B23772E74009D4EA3 /* Build configuration list for PBXProject "HackNJIT iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				428B05C823771A00009D4EA3 /* Debug */,
-				428B05C923771A00009D4EA3 /* Release */,
+				428B063223772E76009D4EA3 /* Debug */,
+				428B063323772E76009D4EA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		428B05CA23771A00009D4EA3 /* Build configuration list for PBXNativeTarget "HackNJIT iOS" */ = {
+		428B063423772E76009D4EA3 /* Build configuration list for PBXNativeTarget "HackNJIT iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				428B05CB23771A00009D4EA3 /* Debug */,
-				428B05CC23771A00009D4EA3 /* Release */,
+				428B063523772E76009D4EA3 /* Debug */,
+				428B063623772E76009D4EA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 428B05AE237719FE009D4EA3 /* Project object */;
+	rootObject = 428B061823772E74009D4EA3 /* Project object */;
 }

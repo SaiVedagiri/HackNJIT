@@ -11,10 +11,9 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  // .get('/api', function (req, res) {
-  //   res.send("Hello World");
-  // })
+  .get('/', function (req, res) {
+     res.send(req);
+  })
   .get('/api', function(req, res) {
     const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
     const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
@@ -40,7 +39,8 @@ express()
 
   // else
   // {
-  //   //GET "https://api.wolframalpha.com/v1/result?i=" + input + "%3F&appid=DEMO"
+    var URL = 'https://api.wolframalpha.com/v1/result?i=${input}%3F&appid=7PPG9H-H5KLEVRLK2';
+    $.getJSON(URL, function (data)
 
   // }
   /*

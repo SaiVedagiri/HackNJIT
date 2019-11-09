@@ -32,12 +32,17 @@ express()
 
   //get input from Arya
 
-  if (input.includes("info"))
-  {
-    //call wolfram alpha api with input
-    //GET "https://api.wolframalpha.com/v1/result?i=" + input + "%3F&appid=DEMO"
+  // if (input.includes("info"))
+  // {
+  //   //call wolfram alpha api with input
+    
+  // }
 
-  }
+  // else
+  // {
+  //   //GET "https://api.wolframalpha.com/v1/result?i=" + input + "%3F&appid=DEMO"
+
+  // }
   /*
   text = "Hello World"
   document = types.Document(

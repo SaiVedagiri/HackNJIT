@@ -73,6 +73,19 @@ express()
   .get('/article', function (req, res) {
     makeRequestArticle("https://www.cnn.com/2019/11/09/us/las-vegas-abduction-father-daughter-charged/index.html", res);
   })
+  .post('/sms', (req, res) => {
+    const twiml = new MessagingResponse();
+    //console.log(req);
+    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+    const client = require('twilio')(accountSid, authToken);
+    client.messages.list({ limit: 1 })
+      .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
+    //twiml.message(myMessage);
+    //console.log(myMessage);
+    //res.writeHead(200, { 'Content-Type': 'text/xml' });
+    //res.end(twiml.toString());
+  })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
 
 

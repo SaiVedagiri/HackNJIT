@@ -389,8 +389,8 @@ async function chatBot(input, currentFromNum, req, res) {
     await makeRequestTranslate(translateText, myLanguage);
   }
 
-  
-  
+
+
   else if (state == "inRestaurant") {
     state = "default";
     await makeRequestRestaurant(input, req, res);
@@ -576,47 +576,97 @@ async function makeRequestDirections(origin, destination, req, res) {
     async function (error, response, body) {
       body = JSON.parse(body);
       var dirString = ""
-        for (var i = 0; i < body.routes[0].legs[0].steps.length; i++) {
-          var direction = body.routes[0].legs[0].steps[i].html_instructions;;
-          dirString += direction;
-          dirString += "\n";
-        }
+      for (var i = 0; i < body.routes[0].legs[0].steps.length; i++) {
+        var direction = body.routes[0].legs[0].steps[i].html_instructions;;
+        dirString += direction;
+        dirString += "\n";
+      }
       var newString = "";
       var dirArray = dirString.split('<');
-        for (var x = 0; x<dirArray.length; x++) {
-            if (dirArray[x].indexOf('>') != undefined) {
-                dirArray[x] = dirArray[x].replace(dirArray[x].substring(0, dirArray[x].indexOf('>')+1), "");
-            }
-            newString += dirArray[x];
+      for (var x = 0; x < dirArray.length; x++) {
+        if (dirArray[x].indexOf('>') != undefined) {
+          dirArray[x] = dirArray[x].replace(dirArray[x].substring(0, dirArray[x].indexOf('>') + 1), "");
         }
+        newString += dirArray[x];
+      }
       await sendMessage(newString, req, res);
       // success case, the file was saved
     });
 }
 
 async function makeRequestSearch(searchTerm, req, res) {
+
   var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}`);
 
+  req.query({
+  });
+
   req.headers({
-    "Ocp-Apim-Subscription-Key": "7f33227b18134a1f9a4d34bb805b360a",
+    "Ocp-Apim-Subscription-Key": "bd4cd7eac86246dea6563a668b8f2e5e",
     "Content-Type": "application/json"
   });
 
 
-  var outputString = "";
-
+  var outputString = ""
   await req.end(async function (res) {
-    searchURL1 = res.body.webPages.value[0].url;
-    searchURL2 = res.body.webPages.value[1].url;
-    searchURL3 = res.body.webPages.value[2].url;
-    searchURL4 = res.body.webPages.value[3].url;
-    searchURL5 = res.body.webPages.value[4].url;
-    sendMessage(
-      "\nPress 1 to view " + res.body.webPages.value[0].name +
-      "\n\nPress 2 to view " + res.body.webPages.value[1].name +
-      "\n\nPress 3 to view " + res.body.webPages.value[2].name +
-      "\n\nPress 4 to view " + res.body.webPages.value[3].name +
-      "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
+    var sortedURLArray = [];
+    var sortedNameArray = [];
+    var sortedRatingArray = [];
+    for (var x = 0; x < res.body.webPages.value.length; x++) {
+      var score = checkSentiment(res.body.webPages.value[x].name);
+      if (x < 5) {
+        sortedURLArray.push(res.body.webPages.value[x].url)
+        sortedNameArray.push(res.body.webPages.value[x].name)
+        sortedRatingArray.push(score)
+      } else {
+        if (score > sortedRatingArray[4]) {
+          sortedURLArray[4] = res.body.webPages.value[x].url
+          sortedNameArray[4] = res.body.webPages.value[x].name
+          sortedRatingArray[4] = score
+        }
+      }
+    }
+    searchURL1 = sortedURLArray[0];
+    searchURL2 = sortedURLArray[1];
+    searchURL3 = sortedURLArray[2];
+    searchURL4 = sortedURLArray[3];
+    searchURL5 = sortedURLArray[4];
+    await sendMessage(
+      "\nPress 1 to view " + sortedNameArray[0] +
+      "\n\nPress 2 to view " + sortedNameArray[1] +
+      "\n\nPress 3 to view " + sortedNameArray[2] +
+      "\n\nPress 4 to view " + sortedNameArray[3] +
+      "\n\nPress 5 to view " + sortedNameArray[4], req, res)
+  });
+
+}
+
+async function checkSentiment(title) {
+
+  var req = unirest("POST", "https://macrotech-textanalytics.cognitiveservices.azure.com//text/analytics/v2.1/sentiment");
+
+  req.query({
+    "showStats": true
+  })
+
+  req.headers({
+    "Ocp-Apim-Subscription-Key": "45b842ab20e244ef93addc0f9ead5a50",
+    "Content-Type": "application/json"
+  });
+
+  req.send({
+    "documents": [
+      {
+        "language": "en",
+        "id": "1",
+        "text": title
+      }
+    ]
+  });
+
+  var outputString = ""
+  await req.end(async function (res) {
+    return res.body.documents[0].score;
   });
 }
 
@@ -674,7 +724,7 @@ async function makeRequestRestaurant(input, req, res) {
   });
 
   var outputString = "";
-  for (var x = 0; x<5; x++) {
+  for (var x = 0; x < 5; x++) {
     outputString += output[x].name;
     outputString += " (Rating = ";
     outputString += output[x].rating;
@@ -693,9 +743,9 @@ async function subjectAnalysis(searchTerm, req, res) {
 
   var req = unirest("POST", "https://textify-textanalytics.cognitiveservices.azure.com/text/analytics/v2.1/keyPhrases");
 
- req.query({
-     "showStats": true
- })
+  req.query({
+    "showStats": true
+  })
 
   req.headers({
     "Ocp-Apim-Subscription-Key": "fb73281bc5e14cf9b2fdeffcb0323d38",
@@ -703,18 +753,18 @@ async function subjectAnalysis(searchTerm, req, res) {
   });
 
   req.send({
-      "documents": [
-        {
-          "language": "en",
-          "id": "1",
-          "text": searchTerm
-        }
-      ]
-    });
+    "documents": [
+      {
+        "language": "en",
+        "id": "1",
+        "text": searchTerm
+      }
+    ]
+  });
 
-var outputString = ""
+  var outputString = ""
   await req.end(async function (res) {
-      await sendMessage(res.body.documents[0].keyPhrases, req, res);
+    await sendMessage(res.body.documents[0].keyPhrases, req, res);
   });
 
 }

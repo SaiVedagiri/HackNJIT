@@ -272,7 +272,7 @@ console.log('<img src="' + apiUrl + '">');
 
 //or save screenshot as an image
 var fs = require('fs');
-var output = 'output.png';
+var output = 'docs/assets/output.png';
 console.log(output);
 screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', function() {
   console.log('Screenshot saved as ' + output);

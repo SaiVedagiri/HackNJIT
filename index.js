@@ -632,7 +632,7 @@ async function makeRequestDirections(origin, destination) {
 }
 
 async function makeRequestTranslate(text, target) {
-  if (target == undefined) {
+  if (!target) {
       target = "en"
     } else if (target.toLowerCase() == "spanish") {
       target = "es"

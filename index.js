@@ -216,7 +216,7 @@ async function chatBot(input, currentFromNum, req, res) {
   }
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    await getImage(`https://bing.com/search?q=${input}`);
+    await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
     state = "inSearch2"
   }

@@ -324,7 +324,7 @@ async function getImage(url) {
     //mandatory parameter
     url: url,
     // all next parameters are optional, see our website screenshot API guide for more details
-    dimension: '1366xfull', // or "1366xfull" for full length screenshot
+    //dimension: '1366xfull', // or "1366xfull" for full length screenshot
     device: 'mobile',
     format: 'png',
     cacheLimit: '0',

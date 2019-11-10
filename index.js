@@ -50,6 +50,19 @@ function sendMessage(message, req, res) {
     .then(message => res.send(message));
 }
 
+function sendImage(media, req, res) {
+  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+  const client = require('twilio')(accountSid, authToken);
+
+  client.messages
+    .create({
+      from: '+12015847119',
+      mediaUrl:['https://hacknjit.azurewebsites.net/output.png'],
+      to: fromNum
+    })
+    .then(message => console.log(media));
+}
 express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
@@ -65,7 +78,7 @@ express()
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['/output.png'],
+        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
         to: '+19179404729'
       })
       .then(message => console.log(message.sid));
@@ -130,7 +143,7 @@ async function checkInput(input, currentFromNum, req, res) {
     for (i = index + 1; i < words.length; i++) {
       search += words[i];
     }
-    makeRequestWikipedia(`https://en.wikipedia.org/api/rest_v1/page/summary/${search}`, req, res);
+    makeRequestWikipedia(search, req, res);
   }
   else if (input.toLowerCase().trim().includes("news")) {
     makeRequestNews(`https://newsapi.org/v2/top-headlines?country=us&apiKey=9e06d9d66c7440d995c78259238d4e68`, req, res);
@@ -149,7 +162,7 @@ async function checkInput(input, currentFromNum, req, res) {
     for (i = index + 1; i < words.length; i++) {
       search += words[i];
     }
-    makeRequestWeather(`https://api.openweathermap.org/data/2.5/weather?q=${search}&apikey=d4aba2f6472ab5c29ac2771336221dd8`, req, res)
+    makeRequestWeather(search, req, res)
   }
 
   else if (input.includes("direction")) {
@@ -173,14 +186,14 @@ async function checkInput(input, currentFromNum, req, res) {
     makeRequestDirections(home, destination, req, res);
   }
 
-  else{
+  else {
     getImage(input);
   }
 }
 
-async function makeRequestWikipedia(uri, req, res) {
+async function makeRequestWikipedia(search, req, res) {
   await request({
-    uri: uri,
+    uri: `https://en.wikipedia.org/api/rest_v1/page/summary/${search}`,
     method: "GET",
     timeout: 10000,
     followRedirect: true,
@@ -189,6 +202,18 @@ async function makeRequestWikipedia(uri, req, res) {
     async function (error, response, body) {
       sendMessage(JSON.parse(body).extract, req, res);
     });
+    await request({
+      uri: `https://kgsearch.googleapis.com/v1/entities:search?query=${search}&key=AIzaSyCiXaUN4yK14KqHFj1Nn76TbQ9PxryFyf0&limit=1&indent=True`,
+      method: "GET", 
+      timeout: 10000,
+      followRedirect: true,
+      maxRedirects: 10
+    },
+      async function (error, response, body) {
+        sendImage(JSON.parse(body).itemListElement[0].result.image.url, req, res);
+      });
+    //
+
 }
 
 async function makeRequestNews(uri, req, res) {
@@ -263,7 +288,7 @@ async function makeRequestArticle(url, req, res) {
 
 
 async function getImage(url) {
-  var customerKey = '95b49b';
+  var customerKey = 'dfce3b';
   secretPhrase = ''; //leave secret phrase empty, if not needed
   options = {
     //mandatory parameter
@@ -287,21 +312,22 @@ async function getImage(url) {
   var fs = require('fs');
   var output = 'output.png';
   console.log(output);
-  await screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', function () {
+  screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', async function () {
     console.log('Screenshot saved as ' + output);
+    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+    const client = require('twilio')(accountSid, authToken);
+    client.messages
+      .create({
+        body: "Website Image",
+        from: '+12015847119',
+        mediaUrl: ['/output.png'],
+        to: fromNum
+      }).then(message => console.log("Sent"));
   }));
 
-  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
-  const client = require('twilio')(accountSid, authToken);
-  client.messages
-    .create({
-      body: "Website Image",
-      from: '+12015847119',
-      mediaUrl: ['/output.png'],
-      to: fromNum
-    })
-    .then(message => console.log(message.sid));
+  
+    
 }
 
 async function makeRequestDirections(origin, destination, req, res) {

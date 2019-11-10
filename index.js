@@ -411,7 +411,7 @@ async function chatBot(input, currentFromNum, req, res) {
   else if (state == "inDirections2") {
     state = "default";
     end = input;
-    makeRequestDirections(beginning, end);
+    await makeRequestDirections(beginning, end, req, res);
   }
 }
 
@@ -589,7 +589,7 @@ async function makeRequestDirections(origin, destination, req, res) {
             }
             newString += dirArray[x];
         }
-      sendMessage(newString, req, res);
+      await sendMessage(newString, req, res);
       // success case, the file was saved
     });
 }
@@ -618,35 +618,6 @@ async function makeRequestSearch(searchTerm, req, res) {
       "\n\nPress 4 to view " + res.body.webPages.value[3].name +
       "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
   });
-}
-
-async function makeRequestDirections(origin, destination) {
-  origin = origin.replace(' ', '+');
-  destination = destination.replace(' ', '+')
-  origin = origin.replace(',', '');
-  destination = destination.replace(',', '')
-  var uri = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyCiXaUN4yK14KqHFj1Nn76TbQ9PxryFyf0`;
-
-  await request({
-    uri: uri,
-    method: "GET",
-    timeout: 10000,
-    followRedirect: true,
-    maxRedirects: 10
-  },
-    async function (error, response, body) {
-      const fs = require('fs');
-      body = JSON.parse(body);
-      var dirString = ""
-      for (var i = 0; i < body.routes[0].legs[0].steps.length; i++) {
-        var direction = body.routes[0].legs[0].steps[i].html_instructions;
-        direction = direction.replace(/<b>/g, "");
-        direction = direction.replace(/<\/b>/g, "");
-        dirString += direction;
-        dirString += "\n";
-      }
-      sendMessage(dirString);
-    });
 }
 
 async function makeRequestTranslate(text, target) {

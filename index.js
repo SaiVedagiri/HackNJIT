@@ -358,7 +358,7 @@ async function makeRequestArticle(url, req, res) {
 
 
 async function getImage(url) {
-  var customerKey = 'dfce3b';
+  var customerKey = '05ecba';
   secretPhrase = ''; //leave secret phrase empty, if not needed
   options = {
     //mandatory parameter

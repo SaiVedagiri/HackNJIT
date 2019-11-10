@@ -99,109 +99,110 @@ express()
 
 
 //get input from Arya
-async function checkInput(input, currentFromNum, req, res) {
-  fromNum = currentFromNum;
-  input = input.trim();
-  input = input.toLowerCase();
-  if (state == "news") {
-    if (input.includes("1")) {
-      makeRequestArticle(url1, req, res);
-      state = "default";
+// async function checkInput(input, currentFromNum, req, res) {
+//   fromNum = currentFromNum;
+//   input = input.trim();
+//   input = input.toLowerCase();
+//   if (state == "news") {
+//     if (input.includes("1")) {
+//       makeRequestArticle(url1, req, res);
+//       state = "default";
 
-    }
-    else if (input.includes("2")) {
-      makeRequestArticle(url2, req, res);
-      state = "default";
+//     }
+//     else if (input.includes("2")) {
+//       makeRequestArticle(url2, req, res);
+//       state = "default";
 
-    }
-    else if (input.includes("3")) {
-      makeRequestArticle(url3, req, res);
-      state = "default";
+//     }
+//     else if (input.includes("3")) {
+//       makeRequestArticle(url3, req, res);
+//       state = "default";
 
-    }
-    else if (input.includes("4")) {
-      makeRequestArticle(url4, req, res);
-      state = "default";
+//     }
+//     else if (input.includes("4")) {
+//       makeRequestArticle(url4, req, res);
+//       state = "default";
 
-    }
-    else if (input.includes("5")) {
-      makeRequestArticle(url5, req, res);
-      state = "default";
-    }
-  }
-  else if (input.includes("info")) {
-    let words = input.split(" ");
-    for (let i = 0; i < words.length; i++) {
-      if (words[i] == "about" || words[i] == "on") {
-        var index = i;
-        break;
-      }
-    }
-    let search = "";
-    for (i = index + 1; i < words.length; i++) {
-      search += words[i];
-    }
-    makeRequestWikipedia(search, req, res);
-  }
-  else if (input.toLowerCase().trim().includes("news")) {
-    makeRequestNews(`https://newsapi.org/v2/top-headlines?country=us&apiKey=9e06d9d66c7440d995c78259238d4e68`, req, res);
-  }
+//     }
+//     else if (input.includes("5")) {
+//       makeRequestArticle(url5, req, res);
+//       state = "default";
+//     }
+//   }
+//   else if (input.includes("info")) {
+//     let words = input.split(" ");
+//     for (let i = 0; i < words.length; i++) {
+//       if (words[i] == "about" || words[i] == "on") {
+//         var index = i;
+//         break;
+//       }
+//     }
+//     let search = "";
+//     for (i = index + 1; i < words.length; i++) {
+//       search += words[i];
+//     }
+//     makeRequestWikipedia(search, req, res);
+//   }
+//   else if (input.toLowerCase().trim().includes("news")) {
+//     makeRequestNews(`https://newsapi.org/v2/top-headlines?country=us&apiKey=9e06d9d66c7440d995c78259238d4e68`, req, res);
+//   }
 
-  else if (input.includes("weather")) {
-    let words = input.split(" ");
-    for (let i = 0; i < words.length; i++) {
-      if (words[i] == "in" || words[i] == "on" || words[i] == "for") {
-        var index = i;
-        break;
-      }
-    }
-    let search = "";
-    for (i = index + 1; i < words.length; i++) {
-      search += words[i];
-    }
-    makeRequestWeather(search, req, res)
-  }
+//   else if (input.includes("weather")) {
+//     let words = input.split(" ");
+//     for (let i = 0; i < words.length; i++) {
+//       if (words[i] == "in" || words[i] == "on" || words[i] == "for") {
+//         var index = i;
+//         break;
+//       }
+//     }
+//     let search = "";
+//     for (i = index + 1; i < words.length; i++) {
+//       search += words[i];
+//     }
+//     makeRequestWeather(search, req, res)
+//   }
 
-  else if (input.includes("direction")) {
-    let words = input.split(" ");
-    for (let i = 0; i < words.length; i++) {
-      if (words[i] == "from") {
-        var from = i;
-        if (words[i] == "to") {
-          var to = i;
-        }
-      }
-    }
-    let home;
-    for (let i = from; i < to; i++) {
-      home += words[i];
-    }
-    let destination;
-    for (let i = to; i < words.length; i++) {
-      destination = words[i];
-    }
-    makeRequestDirections(home, destination, req, res);
-  }
+//   else if (input.includes("direction")) {
+//     let words = input.split(" ");
+//     for (let i = 0; i < words.length; i++) {
+//       if (words[i] == "from") {
+//         var from = i;
+//         if (words[i] == "to") {
+//           var to = i;
+//         }
+//       }
+//     }
+//     let home;
+//     for (let i = from; i < to; i++) {
+//       home += words[i];
+//     }
+//     let destination;
+//     for (let i = to; i < words.length; i++) {
+//       destination = words[i];
+//     }
+//     makeRequestDirections(home, destination, req, res);
+//   }
 
-  else if (input.includes("gif")) {
-    let words = input.split(" ");
-    for (let i = 0; i < words.length; i++) {
-      if (words[i] == "about" || words[i] == "on") {
-        var index = i;
-        break;
-      }
-    }
-    let search = "";
-    for (i = index + 1; i < words.length; i++) {
-      search += words[i];
-    }
-    makeRequestGif(search, req, res);
-  }
+//   else if (input.includes("gif")) {
+//     let words = input.split(" ");
+//     for (let i = 0; i < words.length; i++) {
+//       if (words[i] == "about" || words[i] == "on") {
+//         var index = i;
+//         break;
+//       }
+//     }
+//     let search = "";
+//     for (i = index + 1; i < words.length; i++) {
+//       search += words[i];
+//     }
+//     makeRequestGif(search, req, res);
+//   }
 
-  else {
-    getImage(input);
-  }
-}
+//   else {
+//     getImage(input);
+//   }
+// }
+
 async function chatBot(input, currentFromNum, req, res) {
   myInput = input;
   fromNum = currentFromNum;
@@ -249,41 +250,41 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "default";
   }
 
-  else if (state == "inSearch2" && input.includes("1"))
+  else if (state == "inSearch2" && input=="1")
   {
     sendMessage("Please wait...");
     getImage(searchURL1);
     state = "default";
   }
-  else if (state == "inSearch2" && input.includes("2"))
+  else if (state == "inSearch2" && input=="2")
   {
     sendMessage("Please wait...");
     getImage(searchURL2);
     state = "default";
 
   }
-  else if (state == "inSearch2" && input.includes("3"))
+  else if (state == "inSearch2" && input=="3")
   {
     sendMessage("Please wait...");
     getImage(searchURL3);
     state = "default";
 
   }
-  else if (state == "inSearch2" && input.includes("4"))
+  else if (state == "inSearch2" && input=="4")
   {
     sendMessage("Please wait...");
     getImage(searchURL4);
     state = "default";
 
   }
-  else if (state == "inSearch2" && input.includes("5"))
+  else if (state == "inSearch2" && input=="5")
   {
     sendMessage("Please wait...");
     getImage(searchURL5);
     state = "default";
   }
 
-  else if (state == "default" && input.includes("2")) {
+  else if (state == "default" && input=="2") {
     state = "inURL";
     sendMessage(
       "Enter a url: ", req, res

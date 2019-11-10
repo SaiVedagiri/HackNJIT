@@ -209,7 +209,7 @@ async function checkInput(input, currentFromNum, req, res) {
 
 async function makeRequestGif(search, req, res)
 {
-  let random = 1;
+  let random = parseInt(Math.random()*10);
   await request({
     uri: `https://api.giphy.com/v1/gifs/search?api_key=CtDHcuog6ZG2IM52AUkK15WRlIYhNHl5&q=${search}`,
     method: "GET",
@@ -351,7 +351,7 @@ async function getImage(url) {
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
+        mediaUrl: ['/output.png'],
         to: fromNum
       }).then(message => console.log("Sent"));
   }));

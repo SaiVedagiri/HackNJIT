@@ -58,7 +58,7 @@ function sendImage(media, req, res) {
   client.messages
     .create({
       from: '+12015847119',
-      mediaUrl:['https://hacknjit.azurewebsites.net/output.png'],
+      mediaUrl:[media],
       to: fromNum
     })
     .then(message => console.log(media));

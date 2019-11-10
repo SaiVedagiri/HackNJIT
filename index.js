@@ -632,6 +632,7 @@ async function makeRequestDirections(origin, destination) {
 }
 
 async function makeRequestTranslate(text, target) {
+  sendMessage("Started translating", req, res);
   if (!target) {
       target = "en"
     } else if (target.toLowerCase() == "spanish") {

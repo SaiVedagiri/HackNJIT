@@ -342,7 +342,7 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "default" && input=="6") {
     state = "inWeather";
-    sendMessage("What city are you in?");
+    sendMessage("What is your location?");
   }
 
   else if (state == "inWeather") {

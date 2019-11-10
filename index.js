@@ -36,7 +36,6 @@ http.createServer(app).listen(1337, () => {
   console.log('Express server listening on port 1337');
 });
 
-getImage();
 function sendMessage(message, req, res) {
   const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
   const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
@@ -55,20 +54,19 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', function (req, res) {
-    console.log(typeof (req.params.test));
-    res.send(req);
+  .get('/output.png', function (req, res) {
+    res.sendFile(__dirname + "/output.png");
   })
   .get('/api', function (req, res) {
     const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
     const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
     const client = require('twilio')(accountSid, authToken);
-
+    getImage("https://www.google.com");
     client.messages
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['https://saivedagiri.github.io/HackNJIT/assets/output.png'],
+        mediaUrl: ['/output.png'],
         to: '+19179404729'
       })
       .then(message => console.log(message.sid));
@@ -239,9 +237,7 @@ async function makeRequestArticle(url, req, res) {
     }
     else 
     {
-      banana = banana.substring(0, 50);
       sendMessage(banana, req, res);
-
     }
       //banana, req, res);
   });
@@ -249,13 +245,13 @@ async function makeRequestArticle(url, req, res) {
 }
 
 
-function getImage()
+function getImage(url)
 {
 var customerKey = '95b49b';
     secretPhrase = ''; //leave secret phrase empty, if not needed
     options = {
       //mandatory parameter
-      url : 'https//:google.com',
+      url : url,
       // all next parameters are optional, see our website screenshot API guide for more details
       dimension : '1366xfull', // or "1366xfull" for full length screenshot
       device : 'desktop',
@@ -273,7 +269,7 @@ console.log('<img src="' + apiUrl + '">');
 
 //or save screenshot as an image
 var fs = require('fs');
-var output = 'docs/assets/output.png';
+var output = 'output.png';
 console.log(output);
 screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', function() {
   console.log('Screenshot saved as ' + output);

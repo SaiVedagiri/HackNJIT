@@ -13,6 +13,7 @@
   "dependencies": {
     "ejs": "^2.5.6",
     "express": "^4.15.2",
+    "express-generator": "^4.16.0",
     "mongodb": "^3.3.3",
     "screenshotmachine": "^2.0.0",
     "twilio": "^3.37.0",
@@ -30,11 +31,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SaiVedagiri/SyncFast-Test.git"
+    "url": "git+https://github.com/SaiVedagiri/HackNJIT.git"
   },
   "author": "",
   "bugs": {
-    "url": "https://github.com/SaiVedagiri/SyncFast-Test/issues"
+    "url": "https://github.com/SaiVedagiri/HackNJIT/issues"
   },
-  "homepage": "https://github.com/SaiVedagiri/SyncFast-Test#readme"
+  "homepage": "https://github.com/SaiVedagiri/HackNJIT#readme"
 }

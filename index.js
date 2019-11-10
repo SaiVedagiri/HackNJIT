@@ -246,11 +246,10 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
-    //makeRequestSearch(input);
-    console.log(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
-    console.log("here");
-    state = "inSearch2";
+    //getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    makeRequestSearch(input);
+    state = "inSearch2"
   }
 
   else if (state = "inSearch2" && input.includes(1))

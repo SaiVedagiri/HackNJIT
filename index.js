@@ -7,7 +7,6 @@ var unirest = require("unirest");
 var screenshotmachine = require('screenshotmachine');
 
 const PORT = process.env.PORT || 5000
-const API_KEY = "AIzaSyDhkJ2yT06tRwXIMEUp9xaj2-LxOnKyvGY";
 
 const app = express();
 let state = "default";
@@ -23,7 +22,7 @@ let searchURL4;
 let searchURL5;
 let fromNum;
 
-getImage(`https://bing.com/search?q=banana&setlang=en-us&lf=1&cc=au`);
+//getImage(`https://bing.com/search?q=banana&setlang=en-us&lf=1&cc=au`);
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
@@ -246,7 +245,7 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    //getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    sendMessage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
     state = "inSearch2"

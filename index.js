@@ -511,6 +511,28 @@ async function makeRequestQR(img, req, res) {
   await getImage(value.result);
 }
 
+async function makeRequestJoke() {
+
+  var uri = `http://api.icndb.com/jokes/random/3?firstName=Mark&lastName=Zuckerberg&exclude=[explicit]`;
+  var outputString = "";
+
+  await request({
+    uri: uri,
+    method: "GET",
+    timeout: 10000,
+    followRedirect: true,
+    maxRedirects: 10
+  },
+    async function (error, response, body) {
+        body = JSON.parse(body);
+        for (var x = 0; x<3; x++) {
+            outputString += body.value[x].joke
+            outputString += "\n"
+        }
+      await sendMessage(outputString);
+    });
+}
+
 async function makeRequestWeather(uri, req, res) {
   await request({
     uri: uri,

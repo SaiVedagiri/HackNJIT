@@ -364,7 +364,7 @@ async function chatBot(input, currentFromNum, req, res) {
     , req, res)
   }
 
-  else if (state = "inTranslate2")
+  else if (state == "inTranslate2")
   {
     let language;
     if (input == "1")
@@ -491,18 +491,17 @@ async function makeRequestArticle(url, req, res) {
     "x-rapidapi-key": "fcaaf11ba6mshddd853da7d73799p1a634djsnc1d151d36750"
   });
 
-  let banana;
+  let myMessage;
   await req.end(async function (res) {
     if (res.error) throw new Error(res.error);
-    banana = await res.body.article.text;
-    if (banana.length > 1551) {
-      banana = await banana.substring(0, 1550);
-      sendMessage(banana, req, res);
+    myMessage = await res.body.article.text;
+    if (myMessage.length > 1551) {
+      myMessage = await myMessage.substring(0, 1550);
+      sendMessage(myMessage, req, res);
     }
     else {
-      sendMessage(banana, req, res);
+      sendMessage(myMessage, req, res);
     }
-    //banana, req, res);
   });
 
 }

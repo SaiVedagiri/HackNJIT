@@ -58,7 +58,7 @@ function sendImage(media, req, res) {
   client.messages
     .create({
       from: '+12015847119',
-      mediaUrl:[media],
+      mediaUrl: [media],
       to: fromNum
     })
     .then(message => console.log(media));
@@ -90,7 +90,11 @@ express()
     const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
     const client = require('twilio')(accountSid, authToken);
     client.messages.list({ limit: 1 })
-      .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
+      .then(messages => function (messages) {
+        if (messages[0].body == "init") {
+          chatBot(messages[0].body, messages[0].from, req, res);
+        }
+      });
     //twiml.message(myMessage);
     //console.log(myMessage);
     //res.writeHead(200, { 'Content-Type': 'text/xml' });
@@ -202,18 +206,33 @@ async function checkInput(input, currentFromNum, req, res) {
     makeRequestGif(search, req, res);
   }
 
-  else{
-    getImage(input);  
+  else {
+    getImage(input);
   }
 }
-
-async function makeRequestGif(search, req, res)
-{
-  let random = parseInt(Math.random()*10);
+function chatBot(input, currentFromNum, req, res) {
+  state = "default";
+  sendMessage(
+    "Press a number corresponding to an action" +
+    "\nPress 1 to perform a search." +
+    "\nPress 2 to navigate the web." +
+    "\nPress 3 to get information on a topic." +
+    "\nPress 4 to get stock information." +
+    "\nPress 5 to get directions." +
+    "\nPress 6 for weather data." +
+    "\nPress 7 to translate text." +
+    "\nPress 8 to get restaurant reccomendations." +
+    "\nPress 9 to go to any url." +
+    "\nPress 10 for a gif." +   
+  )
+}
+async function makeRequestGif(search, req, res) {
+  let random = parseInt(Math.random() * 10);
   await request({
     uri: `https://api.giphy.com/v1/gifs/search?api_key=CtDHcuog6ZG2IM52AUkK15WRlIYhNHl5&q=${search}`,
     method: "GET",
     timeout: 10000,
+
     followRedirect: true,
     maxRedirects: 10
   },
@@ -232,17 +251,17 @@ async function makeRequestWikipedia(search, req, res) {
     async function (error, response, body) {
       sendMessage(JSON.parse(body).extract, req, res);
     });
-    await request({
-      uri: `https://kgsearch.googleapis.com/v1/entities:search?query=${search}&key=AIzaSyCiXaUN4yK14KqHFj1Nn76TbQ9PxryFyf0&limit=1&indent=True`,
-      method: "GET", 
-      timeout: 10000,
-      followRedirect: true,
-      maxRedirects: 10
-    },
-      async function (error, response, body) {
-        sendImage(JSON.parse(body).itemListElement[0].result.image.url, req, res);
-      });
-    //
+  await request({
+    uri: `https://kgsearch.googleapis.com/v1/entities:search?query=${search}&key=AIzaSyCiXaUN4yK14KqHFj1Nn76TbQ9PxryFyf0&limit=1&indent=True`,
+    method: "GET",
+    timeout: 10000,
+    followRedirect: true,
+    maxRedirects: 10
+  },
+    async function (error, response, body) {
+      sendImage(JSON.parse(body).itemListElement[0].result.image.url, req, res);
+    });
+  //
 
 }
 
@@ -356,8 +375,8 @@ async function getImage(url) {
       }).then(message => console.log("Sent"));
   }));
 
-  
-    
+
+
 }
 
 async function makeRequestDirections(origin, destination, req, res) {

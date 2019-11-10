@@ -255,7 +255,7 @@ var customerKey = '95b49b';
     secretPhrase = ''; //leave secret phrase empty, if not needed
     options = {
       //mandatory parameter
-      url : 'https://www.google.com/search?biw=1536&bih=754&tbm=isch&sa=1&ei=IDfHXeu0PIid_QbroqigDg&q=banana&oq=banana&gs_l=img.3..0i67l6j0j0i67l3.1351.3572..3702...1.0..1.68.1087.22......0....1..gws-wiz-img.....0.gRg9-HCxZaI&ved=0ahUKEwjrxMzHkN7lAhWITt8KHWsRCuQQ4dUDCAc&uact=5',
+      url : 'https//:google.com',
       // all next parameters are optional, see our website screenshot API guide for more details
       dimension : '1366xfull', // or "1366xfull" for full length screenshot
       device : 'desktop',

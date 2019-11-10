@@ -25,6 +25,8 @@ let fromNum;
 let myInput;
 let beginning;
 let end;
+let translateText;
+
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
   const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
@@ -337,13 +339,50 @@ async function chatBot(input, currentFromNum, req, res) {
   }
   else if (state == "default" && input=="5") {
     state = "inDirections";
-    sendMessage("What is the origin address?");
+    sendMessage("What is the origin address?", req, res);
   }
 
   else if (state == "default" && input=="6") {
     state = "inWeather";
-    sendMessage("What is your location?");
+    sendMessage("What is your location?", req, res);
   }
+
+  else if (state == "default" && input=="7") {
+    state = "inTranslate";
+    sendMessage("What is the text you want to translate?", req, res);
+  }
+
+  else if (state == "inTranslate") {
+    state = "inTranslate2";
+    translateText = input;
+    sendMessage("Enter 1 to translate into Spanish" + 
+    "\nEnter 2 to translate into French" + 
+    "\nEnter 3 to translate into Russian" + 
+    "\nEnter 4 to translate into Hindi" + 
+    "\nEnter 5 to translate into Telugu" + 
+    "\nEnter 6 to translate into Latin"
+    , req, res)
+  }
+
+  else if (state = "inTranslate2")
+  {
+    let language;
+    if (input == "1")
+      language = "spanish";
+      if (input == "2")
+      language = "french";
+      if (input == "3")
+      language = "russian";
+      if (input == "4")
+      language = "hindi";
+      if (input == "5")
+      language = "telugu";
+      if (input == "6")
+      language = "latin";
+      makeRequestTranslate(translationText, language);
+  }
+  
+
 
   else if (state == "inWeather") {
     state = "default";
@@ -592,4 +631,44 @@ async function makeRequestDirections(origin, destination) {
     });
 }
 
-//makeRequestDirections("11 Blake Drive Marlboro, NJ", "495 Smith Court Aberdeen Tonwnship, NJ");
+async function makeRequestTranslate(text, target) {
+  if (target == undefined) {
+      target = "en"
+    } else if (target.toLowerCase() == "spanish") {
+      target = "es"
+    } else if (target.toLowerCase() == "french") {
+      target = "fr"
+    }  else if (target.toLowerCase() == "english") {
+      target = "fr"
+    } else if (target.toLowerCase() == "telegu") {
+      target = "te"
+    } else if (target.toLowerCase() == "russian") {
+      target = "ru"
+    } else if (target.toLowerCase() == "hindi") {
+      target = "hi"
+    } else if (target.toLowerCase() == "latin") {
+      target = "la"
+    }
+
+  var req = unirest("POST", "https://api.cognitive.microsofttranslator.com/translate");
+
+  req.query({
+    "api-version": "3.0",
+    "to": target
+  });
+
+  req.headers({
+    "Content-Type": "application/json",
+    "Ocp-Apim-Subscription-Key": "6dbe5f795bc8442a9315eeed20cfbbe2"
+  });
+
+  req.send([{"Text": text}]);
+
+  var outputString = ""
+  await req.end(async function (res) {
+    if (res.error) throw new Error(res.error);
+      outputString = await res.body[0].translations[0].text;
+    sendMessage(outputString, req, res);
+  });
+
+}

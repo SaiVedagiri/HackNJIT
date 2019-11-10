@@ -66,7 +66,7 @@ express()
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['/output.png'],
+        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
         to: '+19179404729'
       })
       .then(message => console.log(message.sid));

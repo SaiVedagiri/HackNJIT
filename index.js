@@ -20,16 +20,11 @@ let fromNum;
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
-  //console.log(req);
   const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
   const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
   const client = require('twilio')(accountSid, authToken);
   client.messages.list({ limit: 1 })
-    .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
-  //twiml.message(myMessage);
-  //console.log(myMessage);
-  //res.writeHead(200, { 'Content-Type': 'text/xml' });
-  //res.end(twiml.toString());
+    .then(messages => chatBot(messages[0].body, messages[0].from, req, res));
 })
 
 http.createServer(app).listen(1337, () => {
@@ -85,20 +80,11 @@ express()
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
-    //console.log(req);
     const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
     const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
     const client = require('twilio')(accountSid, authToken);
     client.messages.list({ limit: 1 })
-      .then(messages => function (messages) {
-        if (messages[0].body == "init") {
-          chatBot(messages[0].body, messages[0].from, req, res);
-        }
-      });
-    //twiml.message(myMessage);
-    //console.log(myMessage);
-    //res.writeHead(200, { 'Content-Type': 'text/xml' });
-    //res.end(twiml.toString());
+      .then(messages => chatBot(messages[0].body, messages[0].from, req, res));
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
 
@@ -139,7 +125,6 @@ async function checkInput(input, currentFromNum, req, res) {
     for (let i = 0; i < words.length; i++) {
       if (words[i] == "about" || words[i] == "on") {
         var index = i;
-        console.log("index:" + index);
         break;
       }
     }
@@ -158,7 +143,6 @@ async function checkInput(input, currentFromNum, req, res) {
     for (let i = 0; i < words.length; i++) {
       if (words[i] == "in" || words[i] == "on" || words[i] == "for") {
         var index = i;
-        console.log("index:" + index);
         break;
       }
     }
@@ -195,7 +179,6 @@ async function checkInput(input, currentFromNum, req, res) {
     for (let i = 0; i < words.length; i++) {
       if (words[i] == "about" || words[i] == "on") {
         var index = i;
-        console.log("index:" + index);
         break;
       }
     }
@@ -211,22 +194,43 @@ async function checkInput(input, currentFromNum, req, res) {
   }
 }
 function chatBot(input, currentFromNum, req, res) {
-  state = "default";
-  sendMessage(
-    "Press a number corresponding to an action" +
-    "\nPress 1 to perform a search." +
-    "\nPress 2 to navigate the web." +
-    "\nPress 3 to get information on a topic." +
-    "\nPress 4 to get stock information." +
-    "\nPress 5 to get directions." +
-    "\nPress 6 for weather data." +
-    "\nPress 7 to translate text." +
-    "\nPress 8 to get restaurant reccomendations." +
-    "\nPress 9 to go to any url." +
-    "\nPress 10 for a gif."
-    , req, res   
-  )
+  fromNum = currentFromNum;
+  input = input.trim();
+  input = input.toLowerCase();
+  if (input.includes("init") || input.includes("home")) {
+    state = "default";
+    sendMessage(
+      "Press a number corresponding to an action" +
+      "\nPress 1 to perform a search." +
+      "\nPress 2 to navigate the web." +
+      "\nPress 3 to get information on a topic." +
+      "\nPress 4 to get stock information." +
+      "\nPress 5 to get directions." +
+      "\nPress 6 for weather data." +
+      "\nPress 7 to translate text." +
+      "\nPress 8 to get restaurant reccomendations." +
+      "\nPress 9 to go to any url." +
+      "\nPress 10 for a gif." + 
+      "\nType home to return to the home page."
+      , req, res
+    )
+  }
+
+  if (state == "default" && input.includes("1")) {
+    state = "inSearch";
+    sendMessage(
+      "What would you like to perform a search about?", req, res
+    )
+  }
+  else if (state == "inSearch")
+  {
+    sendMessage("Please wait...");
+    getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    //makeRequestSearch(input);
+    state = "inSearchTwo"
+  }
 }
+
 async function makeRequestGif(search, req, res) {
   let random = parseInt(Math.random() * 10);
   await request({
@@ -305,8 +309,6 @@ async function makeRequestWeather(uri, req, res) {
     });
 }
 async function makeRequestArticle(url, req, res) {
-
-  console.log(url);
   var req = unirest("GET", "https://lexper.p.rapidapi.com/v1.1/extract");
 
   req.query({
@@ -325,7 +327,6 @@ async function makeRequestArticle(url, req, res) {
     banana = await res.body.article.text;
     if (banana.length > 1551) {
       banana = await banana.substring(0, 1550);
-      console.log(banana);
       sendMessage(banana, req, res);
     }
     else {
@@ -355,15 +356,10 @@ async function getImage(url) {
 
   var apiUrl = screenshotmachine.generateScreenshotApiUrl(customerKey, secretPhrase, options);
 
-  //put link to your html code
-  console.log('<img src="' + apiUrl + '">');
-
   //or save screenshot as an image
   var fs = require('fs');
   var output = 'output.png';
-  console.log(output);
   screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', async function () {
-    console.log('Screenshot saved as ' + output);
     const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
     const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
     const client = require('twilio')(accountSid, authToken);
@@ -407,6 +403,29 @@ async function makeRequestDirections(origin, destination, req, res) {
       }
       sendMessage(dirString);
       // success case, the file was saved
-      //console.log(body.routes.legs.steps.count);
+    });
+}
+
+async function makeRequestSearch(searchTerm, req, res){
+
+    var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}&setLang=en-us&cc=au`);
+
+    req.query({
+    });
+
+    req.headers({
+      "Ocp-Apim-Subscription-Key": "744e50c938c64015a77add28226f22c8",
+      "Content-Type": "application/json"
+    });
+
+
+    var outputString = ""
+    await req.end(async function (res) {
+      for (var x = 0; x < 5; x++) {
+        outputString += await res.body.webPages.value[x].url
+        outputString += "\n"
+      }
+      if (res.error) throw new Error(res.error);
+      getImage(outputString);
     });
 }

@@ -254,6 +254,13 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "default";
   }
 
+  else if (state == "inInfo")
+  {
+    
+    makeRequestWikipedia(input);
+    state = "default";
+  }
+
   else if (state == "inSearch2" && input=="1")
   {
     await sendMessage("Please wait...");
@@ -292,6 +299,13 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "inURL";
     await sendMessage(
       "Enter a url: ", req, res
+    )
+  }
+
+  else if (state == "default" && input=="3") {
+    state = "inInfo";
+    await sendMessage(
+      "What topic do you want information?", req, res
     )
   }
 

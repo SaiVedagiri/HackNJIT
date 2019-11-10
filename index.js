@@ -209,7 +209,7 @@ async function checkInput(input, currentFromNum, req, res) {
 
 async function makeRequestGif(search, req, res)
 {
-  let random = parseInt(Math.rand()*10);
+  let random = parseInt(Math.random()*10);
   await request({
     uri: `https://api.giphy.com/v1/gifs/search?api_key=CtDHcuog6ZG2IM52AUkK15WRlIYhNHl5&q=${search}`,
     method: "GET",

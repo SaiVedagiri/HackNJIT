@@ -198,7 +198,7 @@ async function checkInput(input, currentFromNum, req, res) {
     getImage(input);
   }
 }
-function chatBot(input, currentFromNum, req, res) {
+async function chatBot(input, currentFromNum, req, res) {
   fromNum = currentFromNum;
   input = input.trim();
   input = input.toLowerCase();
@@ -237,8 +237,9 @@ function chatBot(input, currentFromNum, req, res) {
   else if (state = "inSearch2" && input.includes(1))
   {
     sendMessage("Please wait...");
-    getImage(searchURL1);
+    await getImage(searchURL1);
     state = "default";
+    console.log("herer");
   }
   else if (state = "inSearch2" && input.includes(2))
   {

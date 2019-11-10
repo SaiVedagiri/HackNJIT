@@ -223,8 +223,7 @@ async function chatBot(input, currentFromNum, req, res) {
       "\nPress 6 for weather data." +
       "\nPress 7 to translate text." +
       "\nPress 8 to get restaurant reccomendations." +
-      "\nPress 9 to go to any url." +
-      "\nPress 10 for a gif." +
+      "\nPress 9 for a gif." +
       "\nType home to return to the home page."
       , req, res
     )
@@ -335,7 +334,10 @@ async function chatBot(input, currentFromNum, req, res) {
       "\nEnter 2 to see information about a specific stock", req, res
     )
   }
-
+  else if (state == "default" && input=="5") {
+    state = "inDirections";
+    makeRequestDirections("11 Blake Drive Marlboro, NJ", "495 Smith Court Aberdeen Tonwnship, NJ");
+  }
 }
 
 async function makeRequestGif(search, req, res) {
@@ -538,3 +540,34 @@ async function makeRequestSearch(searchTerm, req, res) {
     "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
   });
 }
+
+async function makeRequestDirections(origin, destination) {
+  origin = origin.replace(' ', '+');
+  destination = destination.replace(' ', '+')
+  origin = origin.replace(',', '');
+  destination = destination.replace(',', '')
+  var uri = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyCiXaUN4yK14KqHFj1Nn76TbQ9PxryFyf0`;
+
+  await request({
+    uri: uri,
+    method: "GET",
+    timeout: 10000,
+    followRedirect: true,
+    maxRedirects: 10
+  },
+    async function (error, response, body) {
+      const fs = require('fs');
+      body = JSON.parse(body);
+      var dirString = ""
+      for (var i = 0; i < body.routes[0].legs[0].steps.length; i++) {
+        var direction = body.routes[0].legs[0].steps[i].html_instructions;
+        direction = direction.replace(/<b>/g, "");
+        direction = direction.replace(/<\/b>/g, "");
+        dirString += direction;
+        dirString += "\n";
+      }
+      sendMessage(dirString);
+    });
+}
+
+//makeRequestDirections("11 Blake Drive Marlboro, NJ", "495 Smith Court Aberdeen Tonwnship, NJ");

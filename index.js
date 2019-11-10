@@ -234,6 +234,23 @@ function chatBot(input, currentFromNum, req, res) {
     state = "inSearch2"
   }
 
+  else if (input.includes("2")) {
+    state = "inURL";
+    sendMessage(
+      "Enter a url: ", req, res
+    )
+  }
+
+  else if (state = "inURL")
+  {
+    if (!input.includes("http"))
+    {
+      input = "https://" + input;
+    }
+    getImage(input);
+    state = "default";
+  }
+
   else if (state = "inSearch2" && input.includes(1))
   {
     sendMessage("Please wait...");

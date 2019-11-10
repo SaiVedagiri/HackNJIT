@@ -295,6 +295,24 @@ async function chatBot(input, currentFromNum, req, res) {
     state = await "default";
   }
 
+  else if (state == "inStocks" && input=="1")
+  {
+    await sendMessage("Please wait...");
+    await getImage("https://www.bloomberg.com/markets/stocks");
+    state = await "default";
+  }
+
+  else if (state == "inStocks" && input=="2")
+  {
+    await sendMessage("What is the ticker of the stock you wish to see?");
+    state = await "inStocks2";
+  }
+
+  else if (state == "inStocks2")
+  {
+    getImage("https://finance.yahoo.com/quote/"+input+"/");
+  }
+
   else if (state == "default" && input=="2") {
     state = "inURL";
     await sendMessage(
@@ -306,6 +324,14 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "inInfo";
     await sendMessage(
       "What topic do you want information about?", req, res
+    )
+  }
+
+  else if (state == "default" && input=="4") {
+    state = "inStocks";
+    await sendMessage(
+      "Enter 1 to see general stock market information." + 
+      "\nEnter 2 to see information about a specific stock", req, res
     )
   }
 

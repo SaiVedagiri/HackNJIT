@@ -244,11 +244,11 @@ async function chatBot(input, currentFromNum, req, res) {
   }
 
   else if (state == "inSearch") {
+    state = "inSearch2"
     await sendMessage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     await sendMessage("Please wait...");
     await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
-    state = "inSearch2"
   }
 
   else if (state == "inSearch2" && input.includes(1))

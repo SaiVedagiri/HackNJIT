@@ -234,10 +234,10 @@ async function chatBot(input, currentFromNum, req, res) {
     )
   }
   else if (state == "inSearch") {
-    sendMessage("Please wait...");
-    getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
-    makeRequestSearch(input);
-    state = "inSearch2"
+    await sendMessage("Please wait...");
+    await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    await makeRequestSearch(input);
+    state = await "inSearch2";
   }
 
   else if (state = "inURL")
@@ -252,41 +252,41 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch2" && input=="1")
   {
-    sendMessage("Please wait...");
-    getImage(searchURL1);
-    state = "default";
+    await sendMessage("Please wait...");
+    await getImage(searchURL1);
+    state = await "default";
   }
   else if (state == "inSearch2" && input=="2")
   {
-    sendMessage("Please wait...");
-    getImage(searchURL2);
-    state = "default";
+    await sendMessage("Please wait...");
+    await getImage(searchURL2);
+    state = await "default";
 
   }
   else if (state == "inSearch2" && input=="3")
   {
-    sendMessage("Please wait...");
-    getImage(searchURL3);
-    state = "default";
+    await sendMessage("Please wait...");
+    await getImage(searchURL3);
+    state = await "default";
 
   }
   else if (state == "inSearch2" && input=="4")
   {
-    sendMessage("Please wait...");
-    getImage(searchURL4);
-    state = "default";
+    await sendMessage("Please wait...");
+    await getImage(searchURL4);
+    state = await "default";
 
   }
   else if (state == "inSearch2" && input=="5")
   {
-    sendMessage("Please wait...");
-    getImage(searchURL5);
-    state = "default";
+    await sendMessage("Please wait...");
+    await getImage(searchURL5);
+    state = await "default";
   }
 
   else if (state == "default" && input=="2") {
     state = "inURL";
-    sendMessage(
+    await sendMessage(
       "Enter a url: ", req, res
     )
   }

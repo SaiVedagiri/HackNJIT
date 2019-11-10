@@ -247,7 +247,7 @@ async function chatBot(input, currentFromNum, req, res) {
       input = "https://" + input;
     }
     getImage(input);
-    await sendMessage("Please wait...");
+    await sendMessage("inURL");
     state = "default";
   }
 

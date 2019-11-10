@@ -83,6 +83,9 @@ express()
       })
       .then(message => console.log(message.sid));
   })
+  .get('/state', function (req, res) {
+    res.send(state);
+  })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
     const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';

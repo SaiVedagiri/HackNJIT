@@ -201,7 +201,7 @@ async function checkInput(input, currentFromNum, req, res) {
     getImage(input);
   }
 }
-function chatBot(input, currentFromNum, req, res) {
+async function chatBot(input, currentFromNum, req, res) {
   fromNum = currentFromNum;
   input = input.trim();
   input = input.toLowerCase();

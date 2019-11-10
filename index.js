@@ -214,6 +214,30 @@ async function chatBot(input, currentFromNum, req, res) {
       "What would you like to perform a search about?", req, res
     )
   }
+  else if (state == "default" && input.includes("2")) {
+    state = "inURL";
+    sendMessage(
+      "Enter a url: ", req, res
+    )
+  }
+
+  else if (input.includes("2")) {
+    state = "inURL";
+    sendMessage(
+      "Enter a url: ", req, res
+    )
+  }
+
+  else if (state = "inURL")
+  {
+    if (!input.includes("http"))
+    {
+      input = "https://" + input;
+    }
+    getImage(input);
+    state = "default";
+  }
+
   else if (state == "inSearch") {
     sendMessage("Please wait...");
     await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);

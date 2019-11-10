@@ -18,6 +18,24 @@ let url4;
 let url5;
 let fromNum;
 
+app.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
+  //console.log(req);
+  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+  const client = require('twilio')(accountSid, authToken);
+  client.messages.list({ limit: 1 })
+    .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
+  //twiml.message(myMessage);
+  //console.log(myMessage);
+  //res.writeHead(200, { 'Content-Type': 'text/xml' });
+  //res.end(twiml.toString());
+})
+
+http.createServer(app).listen(1337, () => {
+  console.log('Express server listening on port 1337');
+});
+
 getImage();
 function sendMessage(message, req, res) {
   const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
@@ -54,19 +72,19 @@ express()
       })
       .then(message => console.log(message.sid));
   })
-  .post('/sms', (req, res) => {
-    const twiml = new MessagingResponse();
-    //console.log(req);
-    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
-    const client = require('twilio')(accountSid, authToken);
-    client.messages.list({ limit: 1 })
-      .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
-    //twiml.message(myMessage);
-    //console.log(myMessage);
-    //res.writeHead(200, { 'Content-Type': 'text/xml' });
-    //res.end(twiml.toString());
-  })
+  // .post('/sms', (req, res) => {
+  //   const twiml = new MessagingResponse();
+  //   //console.log(req);
+  //   const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+  //   const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+  //   const client = require('twilio')(accountSid, authToken);
+  //   client.messages.list({ limit: 1 })
+  //     .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
+  //   //twiml.message(myMessage);
+  //   //console.log(myMessage);
+  //   //res.writeHead(200, { 'Content-Type': 'text/xml' });
+  //   //res.end(twiml.toString());
+  // })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
 
 
@@ -78,32 +96,31 @@ async function checkInput(input, currentFromNum, req, res) {
   if (state == "news") {
     if (input.includes("1"))
     {
-      makeRequestArticle(url1, res);
+      makeRequestArticle(url1, req, res);
       state = "default";
 
     }
     else if (input.includes("2"))
     {
-      makeRequestArticle(url2, res);
+      makeRequestArticle(url2, req, res);
       state = "default";
 
     }
     else if (input.includes("3"))
     {
-      makeRequestArticle(url3, res);
+      makeRequestArticle(url3, req, res);
       state = "default";
 
     }
     else if (input.includes("4"))
     {
-      makeRequestArticle(url4, res);
+      makeRequestArticle(url4, req, res);
       state = "default";
 
     }
     else if (input.includes("5"))
     {
-      console.log(url5);
-      makeRequestArticle(url5, res);
+      makeRequestArticle(url5, req, res);
       state = "default";
     }
   }
@@ -170,11 +187,11 @@ async function makeRequestNews(uri, req, res) {
       "\n\nEnter 3 to read " + JSON.parse(body).articles[2].title + 
       "\n\nEnter 4 to read " + JSON.parse(body).articles[3].title + 
       "\n\nEnter 5 to read " + JSON.parse(body).articles[4].title, req, res)
-      url1 = JSON.parse(body).articles[0].url;
-      url2 = JSON.parse(body).articles[1].url;
-      url3 = JSON.parse(body).articles[2].url;
-      url4 = JSON.parse(body).articles[3].url;
-      url5 = JSON.parse(body).articles[4].url;
+      url1 = await JSON.parse(body).articles[0].url;
+      url2 = await JSON.parse(body).articles[1].url;
+      url3 = await JSON.parse(body).articles[2].url;
+      url4 = await JSON.parse(body).articles[3].url;
+      url5 = await JSON.parse(body).articles[4].url;
       state = "news";
     });
 
@@ -194,7 +211,7 @@ async function makeRequestWeather(uri, req, res) {
       "\n\nTemperature: " + Math.round((JSON.parse(body).main.temp - 273.15) * 9.0 / 5 + 32) + " degrees Farenheit", req, res);
     });
 }
-async function makeRequestArticle(url, res) {
+async function makeRequestArticle(url, req, res) {
 
   console.log(url);
   var req = unirest("GET", "https://lexper.p.rapidapi.com/v1.1/extract");
@@ -212,17 +229,22 @@ async function makeRequestArticle(url, res) {
   let banana;
   await req.end(async function (res) {
     if (res.error) throw new Error(res.error);
-
     banana = await res.body.article.text;
-    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
-    const client = require('twilio')(accountSid, authToken);
+    if (banana.length>1551)
+    {
+    banana = await banana.substring(0, 1550);
+    console.log(banana);
+    sendMessage(banana, req, res);
+    }
+    else 
+    {
+      banana = banana.substring(0, 50);
+      sendMessage(banana, req, res);
 
-    await sendMessage(banana, req, res);
-
+    }
+      //banana, req, res);
   });
-
-
+  
 }
 
 
@@ -250,7 +272,8 @@ console.log('<img src="' + apiUrl + '">');
 
 //or save screenshot as an image
 var fs = require('fs');
-var output = 'output.png';
+var output = 'assets/output.png';
+console.log(output);
 screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', function() {
   console.log('Screenshot saved as ' + output);
 }));

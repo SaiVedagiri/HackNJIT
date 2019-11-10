@@ -222,16 +222,13 @@ async function chatBot(input, currentFromNum, req, res) {
     )
   }
 
-  else if (state == "default" && input.includes("3")) {
-    state = "inInfo";
+  /*else if (input.includes("2")) {
+    state = "inURL";
     sendMessage(
       "What do you want info about? ", req, res
     )
-  }
-  else if (state == "inInfo")
-  {
-    makeRequestWikipedia(input);
-  }
+  }*/
+
   else if (state = "inURL")
   {
     if (!input.includes("http"))
@@ -244,10 +241,8 @@ async function chatBot(input, currentFromNum, req, res) {
   }
 
   else if (state == "inSearch") {
-    state = "inSearch2"
-    await sendMessage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
-    await sendMessage("Please wait...");
-    await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    sendMessage("Please wait...");
+    await getImage(`https://bing.com/search?q=${input}`);
     makeRequestSearch(input);
   }
 

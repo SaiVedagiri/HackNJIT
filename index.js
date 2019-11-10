@@ -236,30 +236,31 @@ function chatBot(input, currentFromNum, req, res) {
 
   else if (state = "inSearch2" && input.includes(1))
   {
+    sendMessage("Please wait...");
     getImage(searchURL1);
     state = "default";
   }
   else if (state = "inSearch2" && input.includes(2))
   {
-    getImage(searchURL1);
+    getImage(searchURL2);
     state = "default";
 
   }
   else if (state = "inSearch2" && input.includes(3))
   {
-    getImage(searchURL1);
+    getImage(searchURL3);
     state = "default";
 
   }
   else if (state = "inSearch2" && input.includes(4))
   {
-    getImage(searchURL1);
+    getImage(searchURL4);
     state = "default";
 
   }
   else if (state = "inSearch2" && input.includes(5))
   {
-    getImage(searchURL1);
+    getImage(searchURL5);
     state = "default";
   }
 

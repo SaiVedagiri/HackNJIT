@@ -298,13 +298,14 @@ async function chatBot(input, currentFromNum, req, res) {
   else if (state == "inStocks" && input=="1")
   {
     await sendMessage("Please wait...");
-    await getImage("https://www.bloomberg.com/markets/stocks");
+    await getImage("https://www.wsj.com/market-data/stocks");
     state = await "default";
   }
 
   else if (state == "inStocks" && input=="2")
   {
     await sendMessage("What is the ticker of the stock you wish to see?");
+    await sendMessage("Please wait...");
     state = await "inStocks2";
   }
 

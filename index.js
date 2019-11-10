@@ -228,7 +228,7 @@ async function chatBot(input, currentFromNum, req, res) {
   }
 
   else if (state == "default" && input.includes("1")) {
-    state = "inSearch";
+    await state = "inSearch";
     sendMessage(
       "What would you like to perform a search about?", req, res
     )

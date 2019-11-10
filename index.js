@@ -92,7 +92,7 @@ express()
       .then(message => console.log(message.sid));
   })
   .get('/state', function (req, res) {
-    res.send("State: " + state + "\nInput: " + myInput);
+    res.send("State: " + state + "\nInput: " + myInput + "\nLanguage: " + language);
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();

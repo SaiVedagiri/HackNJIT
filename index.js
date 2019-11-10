@@ -574,7 +574,6 @@ async function makeRequestDirections(origin, destination, req, res) {
     maxRedirects: 10
   },
     async function (error, response, body) {
-      const fs = require('fs');
       body = JSON.parse(body);
       var dirString = ""
       var dirArray = dirString.split('<');

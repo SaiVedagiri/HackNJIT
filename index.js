@@ -311,7 +311,7 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inStocks2")
   {
-    getImage("https://finance.yahoo.com/quote/"+input+"/");
+    getImage("https://quotes.wsj.com/"+input+"/");
   }
 
   else if (state == "default" && input=="2") {

@@ -68,6 +68,7 @@ express()
       .create({
         body: "Website Image",
         from: '+12015847119',
+        mediaUrl: ['https://saivedagiri.github.io/HackNJIT/assets/output.png'],
         to: '+19179404729'
       })
       .then(message => console.log(message.sid));

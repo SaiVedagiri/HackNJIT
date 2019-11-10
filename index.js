@@ -84,7 +84,7 @@ express()
       .then(message => console.log(message.sid));
   })
   .get('/state', function (req, res) {
-    res.send(state);
+    res.send("State: " + state + "\nInput: " + input);
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
@@ -281,7 +281,7 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "default";
   }
 
-  else if (input.includes("2")) {
+  else if (state == "default" && input.includes("2")) {
     state = "inURL";
     sendMessage(
       "Enter a url: ", req, res

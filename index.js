@@ -589,7 +589,7 @@ async function makeRequestDirections(origin, destination, req, res) {
             }
             newString += dirArray[x];
         }
-      sendMessage(newString);
+      sendMessage(newString, res, req);
       // success case, the file was saved
     });
 }

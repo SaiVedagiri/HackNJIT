@@ -6,7 +6,6 @@ var request = require("request");
 var unirest = require("unirest");
 var screenshotmachine = require('screenshotmachine');
 const yelp = require('yelp-fusion');
-const QRReader = require('qrcode-reader');
 const fs = require('fs');
 const jimp = require('jimp');
 const client = yelp.client('zI6QMcg1yZXZeigdRSoYJug8BEMJce37ij13yhRoUf8EkPW3g3t8PZT8N2Rl8rTRz7jJL8jVhlt4nZB-TP5NK0R4Ay7Ty0rQUfivav3aictdff9MjfnlpPApPoDHXXYx');
@@ -232,8 +231,6 @@ async function chatBot(input, currentFromNum, req, res) {
       "\nEnter 7 to translate text." +
       "\nEnter 8 to get restaurant reccomendations." +
       "\nEnter 9 for a gif." +
-      "\nEnter 10 to deocde a QR code." +
-      "\nEnter 11 for a joke." +
       "\nEnter home to return to the home page."
       , req, res
     )
@@ -356,29 +353,6 @@ async function chatBot(input, currentFromNum, req, res) {
   else if (state == "default" && input == "9") {
     state = "inGif";
     sendMessage("Enter keyword: ", req, res);
-  }
-
-  else if (state == "default" && input == "10") {
-    state = "inQR";
-    sendMessage("Upload image: ", req, res);
-  }
-
-  else if (state == "default" && input == "11") {
-    state = "isJoke";
-    sendMessage("Enter first name and last name: ", req, res);
-  }
-
-  else if (state == "isJoke") {
-    state = "default";
-    let list = await input.trim().split(" ");
-    await makeRequestJoke(list[0], list[1], req, res);
-  }
-
-
-  else if (state == "inQR") {
-    state = "default";
-    await sendMessage("Please wait...", req, res);
-    await makeRequestQR(input, req, res);
   }
 
   else if (state == "inGif") {
@@ -504,41 +478,6 @@ async function makeRequestNews(uri, req, res) {
       state = "news";
     });
 
-}
-
-async function makeRequestQR(img, req, res) {
-
-  const qr = new QRReader();
-
-  // qrcode-reader's API doesn't support promises, so wrap it
-  const value = await new Promise((resolve, reject) => {
-    qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
-    qr.decode(img.bitmap);
-  });
-
-  await getImage(value.result);
-}
-
-async function makeRequestJoke(firstName, lastName, req, res) {
-
-  var uri = `http://api.icndb.com/jokes/random/3?firstName=${firstName}&lastName=${lastName}&exclude=[explicit]`;
-  var outputString = "";
-
-  await request({
-    uri: uri,
-    method: "GET",
-    timeout: 10000,
-    followRedirect: true,
-    maxRedirects: 10
-  },
-    async function (error, response, body) {
-        body = JSON.parse(body);
-        for (var x = 0; x<3; x++) {
-            outputString += body.value[x].joke
-            outputString += "\n"
-        }
-      await sendMessage(outputString, req, res);
-    });
 }
 
 async function makeRequestWeather(uri, req, res) {

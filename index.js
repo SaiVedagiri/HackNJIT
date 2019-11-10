@@ -7,6 +7,7 @@ var unirest = require("unirest");
 var screenshotmachine = require('screenshotmachine');
 
 const PORT = process.env.PORT || 5000
+const API_KEY = "AIzaSyDhkJ2yT06tRwXIMEUp9xaj2-LxOnKyvGY";
 
 const app = express();
 let state = "default";
@@ -21,8 +22,6 @@ let searchURL3;
 let searchURL4;
 let searchURL5;
 let fromNum;
-
-//getImage(`https://bing.com/search?q=banana&setlang=en-us&lf=1&cc=au`);
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
@@ -190,7 +189,7 @@ async function chatBot(input, currentFromNum, req, res) {
   fromNum = currentFromNum;
   input = input.trim();
   input = input.toLowerCase();
-  if (input.includes("init") || input.includes("home") || input.includes("exit")||input.includes("quit")) {
+  if (input.includes("init") || input.includes("home") || input.includes("exit") || input.includes("quit")) {
     state = "default";
     sendMessage(
       "Press a number corresponding to an action" +
@@ -222,60 +221,48 @@ async function chatBot(input, currentFromNum, req, res) {
     )
   }
 
-  else if (state == "default" && input.includes("3")) {
-    state = "inInfo";
+  else if (input.includes("2")) {
+    state = "inURL";
     sendMessage(
-      "What do you want info about? ", req, res
+      "Enter a url: ", req, res
     )
   }
-  else if (state == "inInfo")
-  {
-    makeRequestWikipedia(input);
-  }
-  else if (state = "inURL")
-  {
-    if (!input.includes("http"))
-    {
+
+  else if (state = "inURL") {
+    if (!input.includes("http")) {
       input = "https://" + input;
     }
-    sendMessage("Please wait...8")
     getImage(input);
     state = "default";
   }
 
   else if (state == "inSearch") {
-    state = "inSearch2"
-    await sendMessage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
-    await sendMessage("Please wait...");
+    sendMessage("Please wait...");
     await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
+    state = "inSearch2"
   }
 
-  else if (state == "inSearch2" && input.includes(1))
-  {
-    sendMessage("Please wait...2");
+  else if (state = "inSearch2" && input.includes(1)) {
+    sendMessage("Please wait...");
     await getImage(searchURL1);
   }
-  else if (state == "inSearch2" && input.includes(2))
-  {
-    sendMessage("Please wait...3");
+  else if (state = "inSearch2" && input.includes(2)) {
+    sendMessage("Please wait...");
     await getImage(searchURL2);
 
   }
-  else if (state == "inSearch2" && input.includes(3))
-  {
-    sendMessage("Please wait...4");
+  else if (state = "inSearch2" && input.includes(3)) {
+    sendMessage("Please wait...");
     await getImage(searchURL3);
 
   }
-  else if (state == "inSearch2" && input.includes(4))
-  {
-    sendMessage("Please wait...5");
+  else if (state = "inSearch2" && input.includes(4)) {
+    sendMessage("Please wait...");
     await getImage(searchURL4);
   }
-  else if (state == "inSearch2" && input.includes(5))
-  {
-    sendMessage("Please wait...6");
+  else if (state = "inSearch2" && input.includes(5)) {
+    sendMessage("Please wait...");
     await getImage(searchURL5);
   }
 }
@@ -473,10 +460,10 @@ async function makeRequestSearch(searchTerm, req, res) {
     searchURL4 = res.body.webPages.value[3].url;
     searchURL5 = res.body.webPages.value[4].url;
     sendMessage(
-    "\nPress 1 to view " + res.body.webPages.value[0].name + 
-    "\n\nPress 2 to view " + res.body.webPages.value[1].name + 
-    "\n\nPress 3 to view " + res.body.webPages.value[2].name + 
-    "\n\nPress 4 to view " + res.body.webPages.value[3].name + 
-    "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
+      "\nPress 1 to view " + res.body.webPages.value[0].name +
+      "\n\nPress 2 to view " + res.body.webPages.value[1].name +
+      "\n\nPress 3 to view " + res.body.webPages.value[2].name +
+      "\n\nPress 4 to view " + res.body.webPages.value[3].name +
+      "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
   });
 }

@@ -246,7 +246,7 @@ async function chatBot(input, currentFromNum, req, res) {
     sendMessage("Please wait...");
     //await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
-    sendMessage("here");
+    sendMessage("here", req, res);
     state = "inSearch2";
   }
 

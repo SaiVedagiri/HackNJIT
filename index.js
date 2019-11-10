@@ -85,7 +85,7 @@ express()
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
+        mediaUrl: ['https://textify.azurewebsites.net/output.png'],
         to: '+19179404729'
       })
       .then(message => console.log(message.sid));
@@ -537,7 +537,7 @@ async function getImage(url) {
       .create({
         body: "Website Image",
         from: '+13342343833',
-        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
+        mediaUrl: ['https://textify.azurewebsites.net/output.png'],
         to: fromNum
       }).then(message => console.log("Sent"));
   }));

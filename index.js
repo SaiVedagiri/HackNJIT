@@ -238,14 +238,14 @@ async function chatBot(input, currentFromNum, req, res) {
     {
       input = "https://" + input;
     }
-    sendMessage("Please 3...")
+    sendMessage("Please wait...")
     getImage(input);
     state = "default";
   }
 
   else if (state == "inSearch") {
     await sendMessage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
-    await sendMessage("Please wait...2");
+    await sendMessage("Please wait...");
     await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
     state = "inSearch2"
@@ -253,29 +253,29 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch2" && input.includes(1))
   {
-    sendMessage("Please wait...");
+    sendMessage("Please wait...2");
     await getImage(searchURL1);
   }
   else if (state == "inSearch2" && input.includes(2))
   {
-    sendMessage("Please wait...");
+    sendMessage("Please wait...3");
     await getImage(searchURL2);
 
   }
   else if (state == "inSearch2" && input.includes(3))
   {
-    sendMessage("Please wait...");
+    sendMessage("Please wait...4");
     await getImage(searchURL3);
 
   }
   else if (state == "inSearch2" && input.includes(4))
   {
-    sendMessage("Please wait...");
+    sendMessage("Please wait...5");
     await getImage(searchURL4);
   }
   else if (state == "inSearch2" && input.includes(5))
   {
-    sendMessage("Please wait...");
+    sendMessage("Please wait...6");
     await getImage(searchURL5);
   }
 }

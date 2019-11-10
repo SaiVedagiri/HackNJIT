@@ -7,6 +7,7 @@ var unirest = require("unirest");
 var screenshotmachine = require('screenshotmachine');
 
 const PORT = process.env.PORT || 5000
+const API_KEY = "AIzaSyDhkJ2yT06tRwXIMEUp9xaj2-LxOnKyvGY";
 
 const app = express();
 let state = "default";
@@ -21,8 +22,6 @@ let searchURL3;
 let searchURL4;
 let searchURL5;
 let fromNum;
-
-//getImage(`https://bing.com/search?q=banana&setlang=en-us&lf=1&cc=au`);
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
@@ -225,7 +224,7 @@ async function chatBot(input, currentFromNum, req, res) {
   /*else if (input.includes("2")) {
     state = "inURL";
     sendMessage(
-      "What do you want info about? ", req, res
+      "Enter a url: ", req, res
     )
   }*/
 
@@ -235,7 +234,6 @@ async function chatBot(input, currentFromNum, req, res) {
     {
       input = "https://" + input;
     }
-    sendMessage("Please wait...8")
     getImage(input);
     state = "default";
   }
@@ -244,33 +242,34 @@ async function chatBot(input, currentFromNum, req, res) {
     sendMessage("Please wait...");
     await getImage(`https://bing.com/search?q=${input}`);
     makeRequestSearch(input);
+    state = "inSearch2"
   }
 
-  else if (state == "inSearch2" && input.includes(1))
+  else if (state = "inSearch2" && input.includes(1))
   {
-    sendMessage("Please wait...2");
+    sendMessage("Please wait...");
     await getImage(searchURL1);
   }
-  else if (state == "inSearch2" && input.includes(2))
+  else if (state = "inSearch2" && input.includes(2))
   {
-    sendMessage("Please wait...3");
+    sendMessage("Please wait...");
     await getImage(searchURL2);
 
   }
-  else if (state == "inSearch2" && input.includes(3))
+  else if (state = "inSearch2" && input.includes(3))
   {
-    sendMessage("Please wait...4");
+    sendMessage("Please wait...");
     await getImage(searchURL3);
 
   }
-  else if (state == "inSearch2" && input.includes(4))
+  else if (state = "inSearch2" && input.includes(4))
   {
-    sendMessage("Please wait...5");
+    sendMessage("Please wait...");
     await getImage(searchURL4);
   }
-  else if (state == "inSearch2" && input.includes(5))
+  else if (state = "inSearch2" && input.includes(5))
   {
-    sendMessage("Please wait...6");
+    sendMessage("Please wait...");
     await getImage(searchURL5);
   }
 }
@@ -451,7 +450,7 @@ async function makeRequestDirections(origin, destination, req, res) {
 }
 
 async function makeRequestSearch(searchTerm, req, res) {
-  var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}&setLang=en-us&cc=au`);
+  var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}`);
 
   req.headers({
     "Ocp-Apim-Subscription-Key": "744e50c938c64015a77add28226f22c8",

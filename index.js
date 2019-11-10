@@ -5,6 +5,8 @@ const path = require('path')
 var request = require("request");
 var unirest = require("unirest");
 var screenshotmachine = require('screenshotmachine');
+const yelp = require('yelp-fusion');
+const client = yelp.client('zI6QMcg1yZXZeigdRSoYJug8BEMJce37ij13yhRoUf8EkPW3g3t8PZT8N2Rl8rTRz7jJL8jVhlt4nZB-TP5NK0R4Ay7Ty0rQUfivav3aictdff9MjfnlpPApPoDHXXYx');
 
 const PORT = process.env.PORT || 5000
 const API_KEY = "AIzaSyDhkJ2yT06tRwXIMEUp9xaj2-LxOnKyvGY";
@@ -26,7 +28,6 @@ let myInput;
 let beginning;
 let end;
 let translateText;
-let language = "";
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
@@ -92,7 +93,7 @@ express()
       .then(message => console.log(message.sid));
   })
   .get('/state', function (req, res) {
-    res.send("State: " + state + "\nInput: " + myInput + "\nLanguage: " + language);
+    res.send("State: " + state + "\nInput: " + myInput);
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
@@ -342,6 +343,21 @@ async function chatBot(input, currentFromNum, req, res) {
     sendMessage("What is the text you want to translate?", req, res);
   }
 
+  else if (state == "default" && input == "8") {
+    state = "inRestaurant";
+    sendMessage("Enter city: ", req, res);
+  }
+
+  else if (state == "default" && input == "9") {
+    state = "inGif";
+    sendMessage("Enter keyword: ", req, res);
+  }
+
+  else if (state == "inGif") {
+    state = "default";
+    await makeRequestGif(input, req, res);
+  }
+
   else if (state == "inTranslate") {
     state = "inTranslate2";
     translateText = input;
@@ -355,6 +371,7 @@ async function chatBot(input, currentFromNum, req, res) {
   }
 
   else if (state == "inTranslate2") {
+    state = "default";
     let myLanguage;
     if (input == "1")
       myLanguage = "spanish";
@@ -368,7 +385,14 @@ async function chatBot(input, currentFromNum, req, res) {
       myLanguage = "telugu";
     if (input == "6")
       myLanguage = "latin";
-    makeRequestTranslate(translationText, myLanguage);
+    await makeRequestTranslate(translateText, myLanguage);
+  }
+
+  
+  
+  else if (state == "inRestaurant") {
+    state = "default";
+    await makeRequestRestaurant(input, req, res);
   }
 
 
@@ -620,8 +644,6 @@ async function makeRequestDirections(origin, destination) {
 }
 
 async function makeRequestTranslate(text, target) {
-  await sendMessage("Started translating", req, res);
-  language = target;
   if (!target) {
     target = "en"
   } else if (target.toLowerCase() == "spanish") {
@@ -661,4 +683,31 @@ async function makeRequestTranslate(text, target) {
     sendMessage(outputString, req, res);
   });
 
+}
+
+async function makeRequestRestaurant(input, req, res) {
+  var output;
+  await client.search({
+    location: input,
+    sort_by: 'rating',
+  }).then(response => {
+    output = response.jsonBody.businesses;
+  }).catch(e => {
+    console.log(e);
+  });
+
+  var outputString = "";
+  for (var x = 0; x<5; x++) {
+    outputString += output[x].name;
+    outputString += " (Rating = ";
+    outputString += output[x].rating;
+    outputString += ")\n"
+    if (output[x].location.address1 != "") {
+      outputString += output[x].location.address1;
+      outputString += "\n"
+    }
+    outputString += "\n"
+  }
+
+  sendMessage(outputString, req, res);
 }

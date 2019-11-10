@@ -17,7 +17,8 @@
     "mongodb": "^3.3.3",
     "screenshotmachine": "^2.0.0",
     "twilio": "^3.37.0",
-    "unirest": "^0.6.0"
+    "unirest": "^0.6.0",
+    "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {
     "request": "^2.81.0",

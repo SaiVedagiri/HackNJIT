@@ -221,12 +221,12 @@ async function chatBot(input, currentFromNum, req, res) {
     )
   }
 
-  else if (input.includes("2")) {
+  /*else if (input.includes("2")) {
     state = "inURL";
     sendMessage(
       "Enter a url: ", req, res
     )
-  }
+  }*/
 
   else if (state = "inURL")
   {
@@ -240,7 +240,7 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    await getImage(`https://bing.com/search?q=${input}`);
     makeRequestSearch(input);
     state = "inSearch2"
   }

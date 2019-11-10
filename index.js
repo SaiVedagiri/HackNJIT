@@ -305,12 +305,12 @@ async function chatBot(input, currentFromNum, req, res) {
   else if (state == "inStocks" && input=="2")
   {
     await sendMessage("What is the ticker of the stock you wish to see?");
-    await sendMessage("Please wait...");
     state = await "inStocks2";
   }
 
   else if (state == "inStocks2")
   {
+    sendMessage("Please wait... ")
     getImage("https://quotes.wsj.com/"+input+"/");
   }
 

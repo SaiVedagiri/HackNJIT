@@ -355,6 +355,7 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inGif") {
     state = "default";
+    await sendMessage("Please wait...", req, res);
     await makeRequestGif(input, req, res);
   }
 

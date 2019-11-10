@@ -592,7 +592,7 @@ async function makeRequestSearch(searchTerm, req, res) {
   var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}`);
 
   req.headers({
-    "Ocp-Apim-Subscription-Key": "744e50c938c64015a77add28226f22c8",
+    "Ocp-Apim-Subscription-Key": "bd4cd7eac86246dea6563a668b8f2e5e",
     "Content-Type": "application/json"
   });
 
@@ -671,7 +671,7 @@ async function makeRequestTranslate(text, target) {
 
   req.headers({
     "Content-Type": "application/json",
-    "Ocp-Apim-Subscription-Key": "6dbe5f795bc8442a9315eeed20cfbbe2"
+    "Ocp-Apim-Subscription-Key": "5982068352364aa9bdbe136763a683f9"
   });
 
   req.send([{ "Text": text }]);

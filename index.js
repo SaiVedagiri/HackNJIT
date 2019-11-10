@@ -23,6 +23,8 @@ let searchURL4;
 let searchURL5;
 let fromNum;
 
+getImage(`https://bing.com/search?q=banana&setlang=en-us&lf=1&cc=au`);
+
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
   const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
@@ -244,9 +246,10 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     //makeRequestSearch(input);
-    sendMessage("here", req, res);
+    console.log(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    console.log("here");
     state = "inSearch2";
   }
 

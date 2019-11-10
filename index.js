@@ -628,7 +628,7 @@ async function makeSentimentRequestSearch(searchTerm, req, res) {
   });
 
   req.headers({
-    "Ocp-Apim-Subscription-Key": "bd4cd7eac86246dea6563a668b8f2e5e",
+    "Ocp-Apim-Subscription-Key": "7f33227b18134a1f9a4d34bb805b360a",
     "Content-Type": "application/json"
   });
 

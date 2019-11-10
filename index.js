@@ -26,6 +26,7 @@ let myInput;
 let beginning;
 let end;
 let translateText;
+let language = "";
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
@@ -366,7 +367,6 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inTranslate2")
   {
-    let language;
     if (input == "1")
       language = "spanish";
       if (input == "2")

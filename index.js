@@ -70,6 +70,19 @@ express()
   .get('/output.png', function (req, res) {
     res.sendFile(__dirname + "/output.png");
   })
+  .get('/api', function (req, res) {
+    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+    const client = require('twilio')(accountSid, authToken);
+    client.messages
+      .create({
+        body: "Website Image",
+        from: '+12015847119',
+        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
+        to: '+19179404729'
+      })
+      .then(message => console.log(message.sid));
+  })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
     const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
@@ -185,11 +198,11 @@ async function checkInput(input, currentFromNum, req, res) {
     getImage(input);
   }
 }
-async function chatBot(input, currentFromNum, req, res) {
+function chatBot(input, currentFromNum, req, res) {
   fromNum = currentFromNum;
   input = input.trim();
   input = input.toLowerCase();
-  if (input.includes("init") || input.includes("home") || input.includes("exit")||input.includes("quit")) {
+  if (input.includes("init") || input.includes("home")) {
     state = "default";
     sendMessage(
       "Press a number corresponding to an action" +
@@ -214,64 +227,43 @@ async function chatBot(input, currentFromNum, req, res) {
       "What would you like to perform a search about?", req, res
     )
   }
-  else if (state == "default" && input.includes("2")) {
-    state = "inURL";
-    sendMessage(
-      "Enter a url: ", req, res
-    )
-  }
-
-  /*else if (input.includes("2")) {
-    state = "inURL";
-    sendMessage(
-      "Enter a url: ", req, res
-    )
-  }*/
-
-  else if (state = "inURL")
-  {
-    if (!input.includes("http"))
-    {
-      input = "https://" + input;
-    }
-    getImage(input);
-    state = "default";
-  }
-
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    //await getImage(`https://bing.com/search?q=${input}`);
+    getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
     state = "inSearch2"
   }
 
-  else if (state == "inSearch2" && input.includes(1))
+  else if (state = "inSearch2" && input.includes(1))
   {
     sendMessage("Please wait...");
-    await getImage(searchURL1);
+    getImage(searchURL1);
+    state = "default";
   }
-  else if (state == "inSearch2" && input.includes(2))
+  else if (state = "inSearch2" && input.includes(2))
   {
-    sendMessage("Please wait...");
-    await getImage(searchURL2);
+    getImage(searchURL2);
+    state = "default";
 
   }
-  else if (state == "inSearch2" && input.includes(3))
+  else if (state = "inSearch2" && input.includes(3))
   {
-    sendMessage("Please wait...");
-    await getImage(searchURL3);
+    getImage(searchURL3);
+    state = "default";
 
   }
-  else if (state == "inSearch2" && input.includes(4))
+  else if (state = "inSearch2" && input.includes(4))
   {
-    sendMessage("Please wait...");
-    await getImage(searchURL4);
+    getImage(searchURL4);
+    state = "default";
+
   }
-  else if (state == "inSearch2" && input.includes(5))
+  else if (state = "inSearch2" && input.includes(5))
   {
-    sendMessage("Please wait...");
-    await getImage(searchURL5);
+    getImage(searchURL5);
+    state = "default";
   }
+
 }
 
 async function makeRequestGif(search, req, res) {

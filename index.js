@@ -221,19 +221,23 @@ async function chatBot(input, currentFromNum, req, res) {
     )
   }
 
-  else if (input.includes("2")) {
-    state = "inURL";
+  else if (state == "default" && input.includes("3")) {
+    state = "inInfo";
     sendMessage(
-      "Enter a url: ", req, res
+      "What do you want info about? ", req, res
     )
   }
-
+  else if (state == "inInfo")
+  {
+    makeRequestWikipedia(input);
+  }
   else if (state = "inURL")
   {
     if (!input.includes("http"))
     {
       input = "https://" + input;
     }
+    sendMessage("Please wait...")
     getImage(input);
     state = "default";
   }

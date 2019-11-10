@@ -751,3 +751,33 @@ async function makeRequestRestaurant(input, req, res) {
 
   sendMessage(outputString, req, res);
 }
+
+async function subjectAnalysis(searchTerm, req, res) {
+
+  var req = unirest("POST", "https://macrotech-textanalytics.cognitiveservices.azure.com//text/analytics/v2.1/keyPhrases");
+
+ req.query({
+     "showStats": true
+ })
+
+  req.headers({
+    "Ocp-Apim-Subscription-Key": "45b842ab20e244ef93addc0f9ead5a50",
+    "Content-Type": "application/json"
+  });
+
+  req.send({
+      "documents": [
+        {
+          "language": "en",
+          "id": "1",
+          "text": searchTerm
+        }
+      ]
+    });
+
+var outputString = ""
+  await req.end(async function (res) {
+      await sendMessage(res.body.documents[0].keyPhrases, req, res);
+  });
+
+}

@@ -240,34 +240,34 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    await getImage(`https://bing.com/search?q=${input}`);
+    //await getImage(`https://bing.com/search?q=${input}`);
     makeRequestSearch(input);
     state = "inSearch2"
   }
 
-  else if (state = "inSearch2" && input.includes(1))
+  else if (state == "inSearch2" && input.includes(1))
   {
     sendMessage("Please wait...");
     await getImage(searchURL1);
   }
-  else if (state = "inSearch2" && input.includes(2))
+  else if (state == "inSearch2" && input.includes(2))
   {
     sendMessage("Please wait...");
     await getImage(searchURL2);
 
   }
-  else if (state = "inSearch2" && input.includes(3))
+  else if (state == "inSearch2" && input.includes(3))
   {
     sendMessage("Please wait...");
     await getImage(searchURL3);
 
   }
-  else if (state = "inSearch2" && input.includes(4))
+  else if (state == "inSearch2" && input.includes(4))
   {
     sendMessage("Please wait...");
     await getImage(searchURL4);
   }
-  else if (state = "inSearch2" && input.includes(5))
+  else if (state == "inSearch2" && input.includes(5))
   {
     sendMessage("Please wait...");
     await getImage(searchURL5);

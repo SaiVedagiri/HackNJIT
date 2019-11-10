@@ -186,11 +186,40 @@ async function checkInput(input, currentFromNum, req, res) {
     makeRequestDirections(home, destination, req, res);
   }
 
-  else {
+  else if (input.includes("gif")) {
+    let words = input.split(" ");
+    for (let i = 0; i < words.length; i++) {
+      if (words[i] == "about" || words[i] == "on") {
+        var index = i;
+        console.log("index:" + index);
+        break;
+      }
+    }
+    let search = "";
+    for (i = index + 1; i < words.length; i++) {
+      search += words[i];
+    }
+    makeRequestGif(search, req, res);
+  }
+
+  else{
     getImage(input);
   }
 }
 
+async function makeRequestGif(search, req, res)
+{
+  await request({
+    uri: `https://api.giphy.com/v1/gifs/search?api_key=CtDHcuog6ZG2IM52AUkK15WRlIYhNHl5&q=${search}`,
+    method: "GET",
+    timeout: 10000,
+    followRedirect: true,
+    maxRedirects: 10
+  },
+    async function (error, response, body) {
+      sendImage(JSON.parse(body).data[0].images.original.url, req, res);
+    });
+}
 async function makeRequestWikipedia(search, req, res) {
   await request({
     uri: `https://en.wikipedia.org/api/rest_v1/page/summary/${search}`,

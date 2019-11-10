@@ -585,7 +585,7 @@ async function makeRequestArticle(url, req, res) {
 
 
 async function getImage(url) {
-  var customerKey = '05ecba';
+  var customerKey = '027a19';
   secretPhrase = ''; //leave secret phrase empty, if not needed
   options = {
     //mandatory parameter
@@ -661,7 +661,7 @@ async function makeRequestSearch(searchTerm, req, res) {
   var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}`);
 
   req.headers({
-    "Ocp-Apim-Subscription-Key": "bd4cd7eac86246dea6563a668b8f2e5e",
+    "Ocp-Apim-Subscription-Key": "7f33227b18134a1f9a4d34bb805b360a",
     "Content-Type": "application/json"
   });
 
@@ -711,7 +711,7 @@ async function makeRequestTranslate(text, target) {
 
   req.headers({
     "Content-Type": "application/json",
-    "Ocp-Apim-Subscription-Key": "5982068352364aa9bdbe136763a683f9"
+    "Ocp-Apim-Subscription-Key": "369c40dc946d4f99b60e9fe95eef1c96"
   });
 
   req.send([{ "Text": text }]);
@@ -754,14 +754,14 @@ async function makeRequestRestaurant(input, req, res) {
 
 async function subjectAnalysis(searchTerm, req, res) {
 
-  var req = unirest("POST", "https://macrotech-textanalytics.cognitiveservices.azure.com//text/analytics/v2.1/keyPhrases");
+  var req = unirest("POST", "https://textify-textanalytics.cognitiveservices.azure.com/text/analytics/v2.1/keyPhrases");
 
  req.query({
      "showStats": true
  })
 
   req.headers({
-    "Ocp-Apim-Subscription-Key": "45b842ab20e244ef93addc0f9ead5a50",
+    "Ocp-Apim-Subscription-Key": "fb73281bc5e14cf9b2fdeffcb0323d38",
     "Content-Type": "application/json"
   });
 

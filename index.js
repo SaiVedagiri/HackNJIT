@@ -305,7 +305,7 @@ async function chatBot(input, currentFromNum, req, res) {
   else if (state == "default" && input=="3") {
     state = "inInfo";
     await sendMessage(
-      "What topic do you want information?", req, res
+      "What topic do you want information about?", req, res
     )
   }
 

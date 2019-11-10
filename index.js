@@ -22,6 +22,7 @@ let searchURL3;
 let searchURL4;
 let searchURL5;
 let fromNum;
+let myInput;
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
@@ -84,7 +85,7 @@ express()
       .then(message => console.log(message.sid));
   })
   .get('/state', function (req, res) {
-    res.send("State: " + state + "\nInput: " + input);
+    res.send("State: " + state + "\nInput: " + myInput);
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
@@ -202,6 +203,7 @@ async function checkInput(input, currentFromNum, req, res) {
   }
 }
 async function chatBot(input, currentFromNum, req, res) {
+  myInput = input;
   fromNum = currentFromNum;
   input = input.trim();
   input = input.toLowerCase();

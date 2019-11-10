@@ -23,7 +23,8 @@ let searchURL4;
 let searchURL5;
 let fromNum;
 let myInput;
-
+let beginning;
+let end;
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
   const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
@@ -336,7 +337,17 @@ async function chatBot(input, currentFromNum, req, res) {
   }
   else if (state == "default" && input=="5") {
     state = "inDirections";
-    makeRequestDirections("11 Blake Drive Marlboro, NJ", "495 Smith Court Aberdeen Tonwnship, NJ");
+    sendMessage("What is the origin address?");
+  }
+  else if (state == "inDirections") {
+    state = "inDirections2";
+    beginning = input;
+    sendMessage("What is the destination address?");
+  }
+  else if (state == "inDirections2") {
+    state = "default";
+    end = input;
+    makeRequestDirections(beginning, end);
   }
 }
 

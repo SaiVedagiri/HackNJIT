@@ -6,8 +6,6 @@ var request = require("request");
 var unirest = require("unirest");
 var screenshotmachine = require('screenshotmachine');
 const yelp = require('yelp-fusion');
-const fs = require('fs');
-const jimp = require('jimp');
 const client = yelp.client('zI6QMcg1yZXZeigdRSoYJug8BEMJce37ij13yhRoUf8EkPW3g3t8PZT8N2Rl8rTRz7jJL8jVhlt4nZB-TP5NK0R4Ay7Ty0rQUfivav3aictdff9MjfnlpPApPoDHXXYx');
 
 const PORT = process.env.PORT || 5000

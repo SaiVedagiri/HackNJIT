@@ -577,14 +577,15 @@ async function makeRequestDirections(origin, destination, req, res) {
       const fs = require('fs');
       body = JSON.parse(body);
       var dirString = ""
-      for (var i = 0; i < body.routes[0].legs[0].steps.length; i++) {
-        var direction = body.routes[0].legs[0].steps[i].html_instructions;
-        direction = direction.replace(/<b>/g, "");
-        direction = direction.replace(/<\/b>/g, "");
-        dirString += direction;
-        dirString += "\n";
+      var dirArray = dirString.split('<');
+      let newString;
+      for (var x = 0; x<dirArray.length; x++) {
+          if (dirArray[x].indexOf('>') != undefined) {
+              dirArray[x] = dirArray[x].replace(dirArray[x].substring(0, dirArray[x].indexOf('>')+1), "");
+          }
+          newString += dirArray[x];
       }
-      sendMessage(dirString);
+      sendMessage(newString);
       // success case, the file was saved
     });
 }

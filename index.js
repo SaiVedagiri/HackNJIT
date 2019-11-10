@@ -244,9 +244,9 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inSearch") {
     sendMessage("Please wait...");
-    await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
+    //await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
     makeRequestSearch(input);
-    state = "inSearch2"
+    state = "inSearch2";
   }
 
   else if (state = "inSearch2" && input.includes(1))

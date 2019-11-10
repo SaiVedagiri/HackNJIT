@@ -189,7 +189,7 @@ async function chatBot(input, currentFromNum, req, res) {
   fromNum = currentFromNum;
   input = input.trim();
   input = input.toLowerCase();
-  if (input.includes("init") || input.includes("home") || input.includes("exit")||input.includes("quit")) {
+  if (input.includes("init") || input.includes("home") || input.includes("exit") || input.includes("quit")) {
     state = "default";
     sendMessage(
       "Press a number corresponding to an action" +
@@ -214,6 +214,28 @@ async function chatBot(input, currentFromNum, req, res) {
       "What would you like to perform a search about?", req, res
     )
   }
+  else if (state == "default" && input.includes("2")) {
+    state = "inURL";
+    sendMessage(
+      "Enter a url: ", req, res
+    )
+  }
+
+  else if (input.includes("2")) {
+    state = "inURL";
+    sendMessage(
+      "Enter a url: ", req, res
+    )
+  }
+
+  else if (state = "inURL") {
+    if (!input.includes("http")) {
+      input = "https://" + input;
+    }
+    getImage(input);
+    state = "default";
+  }
+
   else if (state == "inSearch") {
     sendMessage("Please wait...");
     await getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
@@ -221,30 +243,25 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "inSearch2"
   }
 
-  else if (state = "inSearch2" && input.includes(1))
-  {
+  else if (state = "inSearch2" && input.includes(1)) {
     sendMessage("Please wait...");
     await getImage(searchURL1);
   }
-  else if (state = "inSearch2" && input.includes(2))
-  {
+  else if (state = "inSearch2" && input.includes(2)) {
     sendMessage("Please wait...");
     await getImage(searchURL2);
 
   }
-  else if (state = "inSearch2" && input.includes(3))
-  {
+  else if (state = "inSearch2" && input.includes(3)) {
     sendMessage("Please wait...");
     await getImage(searchURL3);
 
   }
-  else if (state = "inSearch2" && input.includes(4))
-  {
+  else if (state = "inSearch2" && input.includes(4)) {
     sendMessage("Please wait...");
     await getImage(searchURL4);
   }
-  else if (state = "inSearch2" && input.includes(5))
-  {
+  else if (state = "inSearch2" && input.includes(5)) {
     sendMessage("Please wait...");
     await getImage(searchURL5);
   }
@@ -443,10 +460,10 @@ async function makeRequestSearch(searchTerm, req, res) {
     searchURL4 = res.body.webPages.value[3].url;
     searchURL5 = res.body.webPages.value[4].url;
     sendMessage(
-    "\nPress 1 to view " + res.body.webPages.value[0].name + 
-    "\n\nPress 2 to view " + res.body.webPages.value[1].name + 
-    "\n\nPress 3 to view " + res.body.webPages.value[2].name + 
-    "\n\nPress 4 to view " + res.body.webPages.value[3].name + 
-    "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
+      "\nPress 1 to view " + res.body.webPages.value[0].name +
+      "\n\nPress 2 to view " + res.body.webPages.value[1].name +
+      "\n\nPress 3 to view " + res.body.webPages.value[2].name +
+      "\n\nPress 4 to view " + res.body.webPages.value[3].name +
+      "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
   });
 }

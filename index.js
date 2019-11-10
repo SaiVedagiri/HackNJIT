@@ -25,8 +25,8 @@ let fromNum;
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
-  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+  const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
+  const authToken = '22f8866edbc1da46954c21f8201b5f86';
   const client = require('twilio')(accountSid, authToken);
   client.messages.list({ limit: 1 })
     .then(messages => chatBot(messages[0].body, messages[0].from, req, res));
@@ -37,27 +37,27 @@ http.createServer(app).listen(1337, () => {
 });
 
 function sendMessage(message, req, res) {
-  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+  const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
+  const authToken = '22f8866edbc1da46954c21f8201b5f86';
   const client = require('twilio')(accountSid, authToken);
 
   client.messages
     .create({
       body: ":\n" + message,
-      from: '+12015847119',
+      from: '+13342343833',
       to: fromNum
     })
     .then(message => res.send(message));
 }
 
 function sendImage(media, req, res) {
-  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+  const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
+  const authToken = '22f8866edbc1da46954c21f8201b5f86';
   const client = require('twilio')(accountSid, authToken);
 
   client.messages
     .create({
-      from: '+12015847119',
+      from: '+13342343833',
       mediaUrl: [media],
       to: fromNum
     })
@@ -70,23 +70,10 @@ express()
   .get('/output.png', function (req, res) {
     res.sendFile(__dirname + "/output.png");
   })
-  .get('/api', function (req, res) {
-    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
-    const client = require('twilio')(accountSid, authToken);
-    client.messages
-      .create({
-        body: "Website Image",
-        from: '+12015847119',
-        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
-        to: '+19179404729'
-      })
-      .then(message => console.log(message.sid));
-  })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
-    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+    const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
+    const authToken = '22f8866edbc1da46954c21f8201b5f86';
     const client = require('twilio')(accountSid, authToken);
     client.messages.list({ limit: 1 })
       .then(messages => chatBot(messages[0].body, messages[0].from, req, res));
@@ -202,7 +189,7 @@ async function chatBot(input, currentFromNum, req, res) {
   fromNum = currentFromNum;
   input = input.trim();
   input = input.toLowerCase();
-  if (input.includes("init") || input.includes("home")) {
+  if (input.includes("init") || input.includes("home") || input.includes("exit")||input.includes("quit")) {
     state = "default";
     sendMessage(
       "Press a number corresponding to an action" +
@@ -238,33 +225,28 @@ async function chatBot(input, currentFromNum, req, res) {
   {
     sendMessage("Please wait...");
     await getImage(searchURL1);
-    state = "default";
-    console.log("herer");
   }
   else if (state = "inSearch2" && input.includes(2))
   {
     sendMessage("Please wait...");
     await getImage(searchURL2);
-    state = "default";
 
   }
   else if (state = "inSearch2" && input.includes(3))
   {
     sendMessage("Please wait...");
     await getImage(searchURL3);
-    state = "default";
 
   }
   else if (state = "inSearch2" && input.includes(4))
   {
     sendMessage("Please wait...");
     await getImage(searchURL4);
-    state = "default";
   }
   else if (state = "inSearch2" && input.includes(5))
   {
+    sendMessage("Please wait...");
     await getImage(searchURL5);
-    state = "default";
   }
 }
 
@@ -397,13 +379,13 @@ async function getImage(url) {
   var fs = require('fs');
   var output = 'output.png';
   screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', async function () {
-    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+    const accountSid = 'AC2f931c38311e3220ae337ae1f9f75875';
+    const authToken = '22f8866edbc1da46954c21f8201b5f86';
     const client = require('twilio')(accountSid, authToken);
     client.messages
       .create({
         body: "Website Image",
-        from: '+12015847119',
+        from: '+13342343833',
         mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
         to: fromNum
       }).then(message => console.log("Sent"));

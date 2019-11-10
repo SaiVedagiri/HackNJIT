@@ -594,7 +594,7 @@ async function makeRequestDirections(origin, destination, req, res) {
     });
 }
 
-async function makeSentimentRequestSearch(searchTerm, req, res) {
+async function makeRequestSearch(searchTerm, req, res) {
   var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}`);
 
   req.headers({
@@ -620,7 +620,7 @@ async function makeSentimentRequestSearch(searchTerm, req, res) {
   });
 }
 
-async function makeRequestSearch(searchTerm, req, res) {
+async function makeSentimentRequestSearch(searchTerm, req, res) {
 
   var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}`);
 

@@ -342,12 +342,12 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "default" && input=="6") {
     state = "inWeather";
-    sendMessage("What city are you in??");
+    sendMessage("What city are you in?");
   }
 
   else if (state == "inWeather") {
     state = "default";
-    makeRequestWeather(input, req, res);
+    await makeRequestWeather(`api.openweathermap.org/data/2.5/weather?q=${input}&apikey=d4aba2f6472ab5c29ac2771336221dd8`, req, res);
   }
 
   else if (state == "inDirections") {

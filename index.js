@@ -246,10 +246,8 @@ async function chatBot(input, currentFromNum, req, res) {
     state = await "inSearch2";
   }
 
-  else if (state == "inURL")
-  {
-    if (!input.includes("http"))
-    {
+  else if (state == "inURL") {
+    if (!input.includes("http")) {
       input = "https://" + input;
     }
     getImage(input);
@@ -257,98 +255,89 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "default";
   }
 
-  else if (state == "inInfo")
-  {
-    
+  else if (state == "inInfo") {
+
     makeRequestWikipedia(input);
     state = "default";
   }
 
-  else if (state == "inSearch2" && input=="1")
-  {
+  else if (state == "inSearch2" && input == "1") {
     await sendMessage("Please wait...");
     await getImage(searchURL1);
     state = await "default";
   }
-  else if (state == "inSearch2" && input=="2")
-  {
+  else if (state == "inSearch2" && input == "2") {
     await sendMessage("Please wait...");
     await getImage(searchURL2);
     state = await "default";
 
   }
-  else if (state == "inSearch2" && input=="3")
-  {
+  else if (state == "inSearch2" && input == "3") {
     await sendMessage("Please wait...");
     await getImage(searchURL3);
     state = await "default";
 
   }
-  else if (state == "inSearch2" && input=="4")
-  {
+  else if (state == "inSearch2" && input == "4") {
     await sendMessage("Please wait...");
     await getImage(searchURL4);
     state = await "default";
 
   }
-  else if (state == "inSearch2" && input=="5")
-  {
+  else if (state == "inSearch2" && input == "5") {
     await sendMessage("Please wait...");
     await getImage(searchURL5);
     state = await "default";
   }
 
-  else if (state == "inStocks" && input=="1")
-  {
+  else if (state == "inStocks" && input == "1") {
     await sendMessage("Please wait...");
     await getImage("https://www.wsj.com/market-data/stocks");
     state = await "default";
   }
 
-  else if (state == "inStocks" && input=="2")
-  {
+  else if (state == "inStocks" && input == "2") {
     await sendMessage("What is the ticker of the stock you wish to see?");
     state = await "inStocks2";
   }
 
-  else if (state == "inStocks2")
-  {
+  else if (state == "inStocks2") {
     sendMessage("Please wait... ")
-    getImage("https://quotes.wsj.com/"+input+"/");
+    getImage("https://quotes.wsj.com/" + input + "/");
   }
 
-  else if (state == "default" && input=="2") {
+  else if (state == "default" && input == "2") {
     state = "inURL";
     await sendMessage(
       "Enter a url: ", req, res
     )
   }
 
-  else if (state == "default" && input=="3") {
+  else if (state == "default" && input == "3") {
     state = "inInfo";
     await sendMessage(
       "What topic do you want information about?", req, res
     )
   }
 
-  else if (state == "default" && input=="4") {
+  else if (state == "default" && input == "4") {
     state = "inStocks";
     await sendMessage(
-      "Enter 1 to see general stock market information." + 
+      "Enter 1 to see general stock market information." +
       "\nEnter 2 to see information about a specific stock", req, res
     )
   }
-  else if (state == "default" && input=="5") {
+  else if (state == "default" && input == "5") {
     state = "inDirections";
     sendMessage("What is the origin address?", req, res);
   }
 
-  else if (state == "default" && input=="6") {
+  else if (state == "default" && input == "6") {
     state = "inWeather";
     sendMessage("What is your location?", req, res);
   }
 
-  else if (state == "default" && input=="7") {
+  else if (state == "default" && input == "7") {
     state = "inTranslate";
     sendMessage("What is the text you want to translate?", req, res);
   }
@@ -356,32 +345,32 @@ async function chatBot(input, currentFromNum, req, res) {
   else if (state == "inTranslate") {
     state = "inTranslate2";
     translateText = input;
-    sendMessage("Enter 1 to translate into Spanish" + 
-    "\nEnter 2 to translate into French" + 
-    "\nEnter 3 to translate into Russian" + 
-    "\nEnter 4 to translate into Hindi" + 
-    "\nEnter 5 to translate into Telugu" + 
-    "\nEnter 6 to translate into Latin"
-    , req, res)
+    sendMessage("Enter 1 to translate into Spanish" +
+      "\nEnter 2 to translate into French" +
+      "\nEnter 3 to translate into Russian" +
+      "\nEnter 4 to translate into Hindi" +
+      "\nEnter 5 to translate into Telugu" +
+      "\nEnter 6 to translate into Latin"
+      , req, res)
   }
 
-  else if (state == "inTranslate2")
-  {
+  else if (state == "inTranslate2") {
+    let myLanguage;
     if (input == "1")
-      language = "spanish";
-      if (input == "2")
-      language = "french";
-      if (input == "3")
-      language = "russian";
-      if (input == "4")
-      language = "hindi";
-      if (input == "5")
-      language = "telugu";
-      if (input == "6")
-      language = "latin";
-      makeRequestTranslate(translationText, language);
+      myLanguage = "spanish";
+    if (input == "2")
+      myLanguage = "french";
+    if (input == "3")
+      myLanguage = "russian";
+    if (input == "4")
+      myLanguage = "hindi";
+    if (input == "5")
+      myLanguage = "telugu";
+    if (input == "6")
+      myLanguage = "latin";
+    makeRequestTranslate(translationText, myLanguage);
   }
-  
+
 
 
   else if (state == "inWeather") {
@@ -593,11 +582,11 @@ async function makeRequestSearch(searchTerm, req, res) {
     searchURL4 = res.body.webPages.value[3].url;
     searchURL5 = res.body.webPages.value[4].url;
     sendMessage(
-    "\nPress 1 to view " + res.body.webPages.value[0].name + 
-    "\n\nPress 2 to view " + res.body.webPages.value[1].name + 
-    "\n\nPress 3 to view " + res.body.webPages.value[2].name + 
-    "\n\nPress 4 to view " + res.body.webPages.value[3].name + 
-    "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
+      "\nPress 1 to view " + res.body.webPages.value[0].name +
+      "\n\nPress 2 to view " + res.body.webPages.value[1].name +
+      "\n\nPress 3 to view " + res.body.webPages.value[2].name +
+      "\n\nPress 4 to view " + res.body.webPages.value[3].name +
+      "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
   });
 }
 
@@ -631,24 +620,25 @@ async function makeRequestDirections(origin, destination) {
 }
 
 async function makeRequestTranslate(text, target) {
-  sendMessage("Started translating", req, res);
+  await sendMessage("Started translating", req, res);
+  language = target;
   if (!target) {
-      target = "en"
-    } else if (target.toLowerCase() == "spanish") {
-      target = "es"
-    } else if (target.toLowerCase() == "french") {
-      target = "fr"
-    }  else if (target.toLowerCase() == "english") {
-      target = "fr"
-    } else if (target.toLowerCase() == "telegu") {
-      target = "te"
-    } else if (target.toLowerCase() == "russian") {
-      target = "ru"
-    } else if (target.toLowerCase() == "hindi") {
-      target = "hi"
-    } else if (target.toLowerCase() == "latin") {
-      target = "la"
-    }
+    target = "en"
+  } else if (target.toLowerCase() == "spanish") {
+    target = "es"
+  } else if (target.toLowerCase() == "french") {
+    target = "fr"
+  } else if (target.toLowerCase() == "english") {
+    target = "fr"
+  } else if (target.toLowerCase() == "telegu") {
+    target = "te"
+  } else if (target.toLowerCase() == "russian") {
+    target = "ru"
+  } else if (target.toLowerCase() == "hindi") {
+    target = "hi"
+  } else if (target.toLowerCase() == "latin") {
+    target = "la"
+  }
 
   var req = unirest("POST", "https://api.cognitive.microsofttranslator.com/translate");
 
@@ -662,12 +652,12 @@ async function makeRequestTranslate(text, target) {
     "Ocp-Apim-Subscription-Key": "6dbe5f795bc8442a9315eeed20cfbbe2"
   });
 
-  req.send([{"Text": text}]);
+  req.send([{ "Text": text }]);
 
   var outputString = ""
   await req.end(async function (res) {
     if (res.error) throw new Error(res.error);
-      outputString = await res.body[0].translations[0].text;
+    outputString = await res.body[0].translations[0].text;
     sendMessage(outputString, req, res);
   });
 

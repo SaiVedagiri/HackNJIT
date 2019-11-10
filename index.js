@@ -31,8 +31,8 @@ let translateText;
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
-  const accountSid = 'AC3b77f25ec6dbba3808d5e9fc759e278d';
-  const authToken = '4b13a4df127d7b7923a0d638b59deb11';
+  const accountSid = 'ACa79a24b798f41ffa8f7cdbd2e9e4b4f5';
+  const authToken = 'ce2b1da8e10abee3dbe59834ca0cb48d';
   const client = require('twilio')(accountSid, authToken);
   client.messages.list({ limit: 1 })
     .then(messages => chatBot(messages[0].body, messages[0].from, req, res));
@@ -43,27 +43,27 @@ http.createServer(app).listen(1337, () => {
 });
 
 function sendMessage(message, req, res) {
-  const accountSid = 'AC3b77f25ec6dbba3808d5e9fc759e278d';
-  const authToken = '4b13a4df127d7b7923a0d638b59deb11';
+  const accountSid = 'ACa79a24b798f41ffa8f7cdbd2e9e4b4f5';
+  const authToken = 'ce2b1da8e10abee3dbe59834ca0cb48d';
   const client = require('twilio')(accountSid, authToken);
 
   client.messages
     .create({
       body: ":\n" + message,
-      from: '+12014264460',
+      from: '+12512202935',
       to: fromNum
     })
     .then(message => res.send(message));
 }
 
 function sendImage(media, req, res) {
-  const accountSid = 'AC3b77f25ec6dbba3808d5e9fc759e278d';
-  const authToken = '4b13a4df127d7b7923a0d638b59deb11';
+  const accountSid = 'ACa79a24b798f41ffa8f7cdbd2e9e4b4f5';
+  const authToken = 'ce2b1da8e10abee3dbe59834ca0cb48d';
   const client = require('twilio')(accountSid, authToken);
 
   client.messages
     .create({
-      from: '+12014264460',
+      from: '+12512202935',
       mediaUrl: [media],
       to: fromNum
     })
@@ -97,8 +97,8 @@ express()
   })
   .post('/sms', (req, res) => {
     const twiml = new MessagingResponse();
-    const accountSid = 'AC3b77f25ec6dbba3808d5e9fc759e278d';
-    const authToken = '4b13a4df127d7b7923a0d638b59deb11';
+    const accountSid = 'ACa79a24b798f41ffa8f7cdbd2e9e4b4f5';
+    const authToken = 'ce2b1da8e10abee3dbe59834ca0cb48d';
     const client = require('twilio')(accountSid, authToken);
     client.messages.list({ limit: 1 })
       .then(messages => chatBot(messages[0].body, messages[0].from, req, res));
@@ -543,13 +543,13 @@ async function getImage(url) {
   var fs = require('fs');
   var output = 'output.png';
   screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', async function () {
-    const accountSid = 'AC3b77f25ec6dbba3808d5e9fc759e278d';
-    const authToken = '4b13a4df127d7b7923a0d638b59deb11';
+    const accountSid = 'ACa79a24b798f41ffa8f7cdbd2e9e4b4f5';
+    const authToken = 'ce2b1da8e10abee3dbe59834ca0cb48d';
     const client = require('twilio')(accountSid, authToken);
     client.messages
       .create({
         body: "Website Image",
-        from: '+12014264460',
+        from: '+12512202935',
         mediaUrl: ['https://textify.azurewebsites.net/output.png'],
         to: fromNum
       }).then(message => console.log("Sent"));

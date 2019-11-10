@@ -351,7 +351,7 @@ async function getImage(url) {
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['/output.png'],
+        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
         to: fromNum
       }).then(message => console.log("Sent"));
   }));

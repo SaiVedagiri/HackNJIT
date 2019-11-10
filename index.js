@@ -61,29 +61,28 @@ express()
     const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
     const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
     const client = require('twilio')(accountSid, authToken);
-    getImage("https://www.google.com");
     client.messages
       .create({
         body: "Website Image",
         from: '+12015847119',
-        mediaUrl: ['https://hacknjit.azurewebsites.net/output.png'],
+        mediaUrl: ['/output.png'],
         to: '+19179404729'
       })
       .then(message => console.log(message.sid));
   })
-  // .post('/sms', (req, res) => {
-  //   const twiml = new MessagingResponse();
-  //   //console.log(req);
-  //   const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-  //   const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
-  //   const client = require('twilio')(accountSid, authToken);
-  //   client.messages.list({ limit: 1 })
-  //     .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
-  //   //twiml.message(myMessage);
-  //   //console.log(myMessage);
-  //   //res.writeHead(200, { 'Content-Type': 'text/xml' });
-  //   //res.end(twiml.toString());
-  // })
+  .post('/sms', (req, res) => {
+    const twiml = new MessagingResponse();
+    //console.log(req);
+    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+    const client = require('twilio')(accountSid, authToken);
+    client.messages.list({ limit: 1 })
+      .then(messages => checkInput(messages[0].body, messages[0].from, req, res));
+    //twiml.message(myMessage);
+    //console.log(myMessage);
+    //res.writeHead(200, { 'Content-Type': 'text/xml' });
+    //res.end(twiml.toString());
+  })
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
 
 
@@ -93,32 +92,27 @@ async function checkInput(input, currentFromNum, req, res) {
   input = input.trim();
   input = input.toLowerCase();
   if (state == "news") {
-    if (input.includes("1"))
-    {
+    if (input.includes("1")) {
       makeRequestArticle(url1, req, res);
       state = "default";
 
     }
-    else if (input.includes("2"))
-    {
+    else if (input.includes("2")) {
       makeRequestArticle(url2, req, res);
       state = "default";
 
     }
-    else if (input.includes("3"))
-    {
+    else if (input.includes("3")) {
       makeRequestArticle(url3, req, res);
       state = "default";
 
     }
-    else if (input.includes("4"))
-    {
+    else if (input.includes("4")) {
       makeRequestArticle(url4, req, res);
       state = "default";
 
     }
-    else if (input.includes("5"))
-    {
+    else if (input.includes("5")) {
       makeRequestArticle(url5, req, res);
       state = "default";
     }
@@ -157,6 +151,31 @@ async function checkInput(input, currentFromNum, req, res) {
     }
     makeRequestWeather(`https://api.openweathermap.org/data/2.5/weather?q=${search}&apikey=d4aba2f6472ab5c29ac2771336221dd8`, req, res)
   }
+
+  else if (input.includes("direction")) {
+    let words = input.split(" ");
+    for (let i = 0; i < words.length; i++) {
+      if (words[i] == "from") {
+        var from = i;
+        if (words[i] == "to") {
+          var to = i;
+        }
+      }
+    }
+    let home;
+    for (let i = from; i < to; i++) {
+      home += words[i];
+    }
+    let destination;
+    for (let i = to; i < words.length; i++) {
+      destination = words[i];
+    }
+    makeRequestDirections(home, destination, req, res);
+  }
+
+  else{
+    getImage(input);
+  }
 }
 
 async function makeRequestWikipedia(uri, req, res) {
@@ -181,11 +200,11 @@ async function makeRequestNews(uri, req, res) {
     maxRedirects: 10
   },
     async function (error, response, body) {
-      sendMessage("Enter 1 to read " + JSON.parse(body).articles[0].title + 
-      "\n\nEnter 2 to read " + JSON.parse(body).articles[1].title + 
-      "\n\nEnter 3 to read " + JSON.parse(body).articles[2].title + 
-      "\n\nEnter 4 to read " + JSON.parse(body).articles[3].title + 
-      "\n\nEnter 5 to read " + JSON.parse(body).articles[4].title, req, res)
+      sendMessage("Enter 1 to read " + JSON.parse(body).articles[0].title +
+        "\n\nEnter 2 to read " + JSON.parse(body).articles[1].title +
+        "\n\nEnter 3 to read " + JSON.parse(body).articles[2].title +
+        "\n\nEnter 4 to read " + JSON.parse(body).articles[3].title +
+        "\n\nEnter 5 to read " + JSON.parse(body).articles[4].title, req, res)
       url1 = await JSON.parse(body).articles[0].url;
       url2 = await JSON.parse(body).articles[1].url;
       url3 = await JSON.parse(body).articles[2].url;
@@ -205,9 +224,9 @@ async function makeRequestWeather(uri, req, res) {
     maxRedirects: 10
   },
     async function (error, response, body) {
-      sendMessage("Weather Type: " + JSON.parse(body).weather[0].main + 
-      "\n\nDescription: " + JSON.parse(body).weather[0].description + 
-      "\n\nTemperature: " + Math.round((JSON.parse(body).main.temp - 273.15) * 9.0 / 5 + 32) + " degrees Farenheit", req, res);
+      sendMessage("Weather Type: " + JSON.parse(body).weather[0].main +
+        "\n\nDescription: " + JSON.parse(body).weather[0].description +
+        "\n\nTemperature: " + Math.round((JSON.parse(body).main.temp - 273.15) * 9.0 / 5 + 32) + " degrees Farenheit", req, res);
     });
 }
 async function makeRequestArticle(url, req, res) {
@@ -229,49 +248,89 @@ async function makeRequestArticle(url, req, res) {
   await req.end(async function (res) {
     if (res.error) throw new Error(res.error);
     banana = await res.body.article.text;
-    if (banana.length>1551)
-    {
-    banana = await banana.substring(0, 1550);
-    console.log(banana);
-    sendMessage(banana, req, res);
-    }
-    else 
-    {
+    if (banana.length > 1551) {
+      banana = await banana.substring(0, 1550);
+      console.log(banana);
       sendMessage(banana, req, res);
     }
-      //banana, req, res);
+    else {
+      sendMessage(banana, req, res);
+    }
+    //banana, req, res);
   });
-  
+
 }
 
 
-function getImage(url)
-{
-var customerKey = '95b49b';
-    secretPhrase = ''; //leave secret phrase empty, if not needed
-    options = {
-      //mandatory parameter
-      url : url,
-      // all next parameters are optional, see our website screenshot API guide for more details
-      dimension : '1366xfull', // or "1366xfull" for full length screenshot
-      device : 'desktop',
-      format: 'png',
-      cacheLimit: '0',
-      delay: '200',
-      zoom: '100'
-    }
+async function getImage(url) {
+  var customerKey = '95b49b';
+  secretPhrase = ''; //leave secret phrase empty, if not needed
+  options = {
+    //mandatory parameter
+    url: url,
+    // all next parameters are optional, see our website screenshot API guide for more details
+    dimension: '1366xfull', // or "1366xfull" for full length screenshot
+    device: 'desktop',
+    format: 'png',
+    cacheLimit: '0',
+    delay: '200',
+    zoom: '100'
+  }
 
 
-var apiUrl = screenshotmachine.generateScreenshotApiUrl(customerKey, secretPhrase, options);
+  var apiUrl = screenshotmachine.generateScreenshotApiUrl(customerKey, secretPhrase, options);
 
-//put link to your html code
-console.log('<img src="' + apiUrl + '">');
+  //put link to your html code
+  console.log('<img src="' + apiUrl + '">');
 
-//or save screenshot as an image
-var fs = require('fs');
-var output = 'output.png';
-console.log(output);
-screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', function() {
-  console.log('Screenshot saved as ' + output);
-}));
+  //or save screenshot as an image
+  var fs = require('fs');
+  var output = 'output.png';
+  console.log(output);
+  await screenshotmachine.readScreenshot(apiUrl).pipe(fs.createWriteStream(output).on('close', function () {
+    console.log('Screenshot saved as ' + output);
+  }));
+
+  const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
+  const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+  const client = require('twilio')(accountSid, authToken);
+  client.messages
+    .create({
+      body: "Website Image",
+      from: '+12015847119',
+      mediaUrl: ['/output.png'],
+      to: fromNum
+    })
+    .then(message => console.log(message.sid));
+}
+
+async function makeRequestDirections(origin, destination, req, res) {
+  origin = origin.replace(' ', '+');
+  destination = destination.replace(' ', '+')
+  origin = origin.replace(',', '');
+  destination = destination.replace(',', '')
+  var uri = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyCiXaUN4yK14KqHFj1Nn76TbQ9PxryFyf0`;
+
+  await request({
+    uri: uri,
+    method: "GET",
+    timeout: 10000,
+    followRedirect: true,
+    maxRedirects: 10
+  },
+    async function (error, response, body) {
+      const fs = require('fs');
+      body = JSON.parse(body);
+      var dirString = ""
+      for (var i = 0; i < body.routes[0].legs[0].steps.length; i++) {
+        var direction = body.routes[0].legs[0].steps[i].html_instructions;
+        direction = direction.replace(/<b>/g, "");
+        direction = direction.replace(/<\/b>/g, "");
+        dirString += direction;
+        dirString += "\n";
+      }
+      sendMessage(dirString);
+      // success case, the file was saved
+      //console.log(body.routes.legs.steps.count);
+    });
 }

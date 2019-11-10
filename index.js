@@ -339,6 +339,17 @@ async function chatBot(input, currentFromNum, req, res) {
     state = "inDirections";
     sendMessage("What is the origin address?");
   }
+
+  else if (state == "default" && input=="6") {
+    state = "inWeather";
+    sendMessage("What city are you in??");
+  }
+
+  else if (state == "inWeather") {
+    state = "default";
+    makeRequestWeather(input, req, res);
+  }
+
   else if (state == "inDirections") {
     state = "inDirections2";
     beginning = input;

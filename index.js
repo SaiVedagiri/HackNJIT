@@ -364,8 +364,16 @@ async function chatBot(input, currentFromNum, req, res) {
   }
 
   else if (state == "default" && input == "11") {
-    await makeRequestJoke(req, res);
+    state = "isJoke";
+    sendMessage("Enter first name and last name: ", req, res);
   }
+
+  else if (state == "isJoke") {
+    state = "default";
+    let list = await input.trim().split(" ");
+    await makeRequestJoke(list[0], list[1], req, res);
+  }
+
 
   else if (state == "inQR") {
     state = "default";
@@ -511,9 +519,9 @@ async function makeRequestQR(img, req, res) {
   await getImage(value.result);
 }
 
-async function makeRequestJoke() {
+async function makeRequestJoke(firstName, lastName, req, res) {
 
-  var uri = `http://api.icndb.com/jokes/random/3?firstName=Mark&lastName=Zuckerberg&exclude=[explicit]`;
+  var uri = `http://api.icndb.com/jokes/random/3?firstName=${firstName}&lastName=${lastName}&exclude=[explicit]`;
   var outputString = "";
 
   await request({
@@ -529,7 +537,7 @@ async function makeRequestJoke() {
             outputString += body.value[x].joke
             outputString += "\n"
         }
-      await sendMessage(outputString);
+      await sendMessage(outputString, req, res);
     });
 }
 

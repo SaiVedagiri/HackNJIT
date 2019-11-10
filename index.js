@@ -250,7 +250,7 @@ async function chatBot(input, currentFromNum, req, res) {
       input = "https://" + input;
     }
     getImage(input);
-    await sendMessage("inURL");
+    await sendMessage("Please wait...");
     state = "default";
   }
 

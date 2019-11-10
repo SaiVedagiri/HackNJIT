@@ -240,7 +240,7 @@ async function chatBot(input, currentFromNum, req, res) {
     state = await "inSearch2";
   }
 
-  else if (state = "inURL")
+  else if (state == "inURL")
   {
     if (!input.includes("http"))
     {

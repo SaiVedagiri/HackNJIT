@@ -16,6 +16,11 @@ let url2;
 let url3;
 let url4;
 let url5;
+let searchURL1;
+let searchURL2;
+let searchURL3;
+let searchURL4;
+let searchURL5;
 let fromNum;
 
 app.post('/sms', (req, res) => {
@@ -210,25 +215,54 @@ function chatBot(input, currentFromNum, req, res) {
       "\nPress 7 to translate text." +
       "\nPress 8 to get restaurant reccomendations." +
       "\nPress 9 to go to any url." +
-      "\nPress 10 for a gif." + 
+      "\nPress 10 for a gif." +
       "\nType home to return to the home page."
       , req, res
     )
   }
 
-  if (state == "default" && input.includes("1")) {
+  else if (state == "default" && input.includes("1")) {
     state = "inSearch";
     sendMessage(
       "What would you like to perform a search about?", req, res
     )
   }
-  else if (state == "inSearch")
-  {
+  else if (state == "inSearch") {
     sendMessage("Please wait...");
     getImage(`https://bing.com/search?q=${input}&setlang=en-us&lf=1&cc=au`);
-    //makeRequestSearch(input);
-    state = "inSearchTwo"
+    makeRequestSearch(input);
+    state = "inSearch2"
   }
+
+  else if (state = "inSearch2" && input.includes(1))
+  {
+    getImage(searchURL1);
+    state = "default";
+  }
+  else if (state = "inSearch2" && input.includes(2))
+  {
+    getImage(searchURL1);
+    state = "default";
+
+  }
+  else if (state = "inSearch2" && input.includes(3))
+  {
+    getImage(searchURL1);
+    state = "default";
+
+  }
+  else if (state = "inSearch2" && input.includes(4))
+  {
+    getImage(searchURL1);
+    state = "default";
+
+  }
+  else if (state = "inSearch2" && input.includes(5))
+  {
+    getImage(searchURL1);
+    state = "default";
+  }
+
 }
 
 async function makeRequestGif(search, req, res) {
@@ -406,26 +440,28 @@ async function makeRequestDirections(origin, destination, req, res) {
     });
 }
 
-async function makeRequestSearch(searchTerm, req, res){
+async function makeRequestSearch(searchTerm, req, res) {
+  var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}&setLang=en-us&cc=au`);
 
-    var req = unirest("GET", `https://api.cognitive.microsoft.com/bing/v7.0/search?q=${searchTerm}&setLang=en-us&cc=au`);
-
-    req.query({
-    });
-
-    req.headers({
-      "Ocp-Apim-Subscription-Key": "744e50c938c64015a77add28226f22c8",
-      "Content-Type": "application/json"
-    });
+  req.headers({
+    "Ocp-Apim-Subscription-Key": "744e50c938c64015a77add28226f22c8",
+    "Content-Type": "application/json"
+  });
 
 
-    var outputString = ""
-    await req.end(async function (res) {
-      for (var x = 0; x < 5; x++) {
-        outputString += await res.body.webPages.value[x].url
-        outputString += "\n"
-      }
-      if (res.error) throw new Error(res.error);
-      getImage(outputString);
-    });
+  var outputString = "";
+
+  await req.end(async function (res) {
+    searchURL1 = res.body.webPages.value[0].url;
+    searchURL2 = res.body.webPages.value[1].url;
+    searchURL3 = res.body.webPages.value[2].url;
+    searchURL4 = res.body.webPages.value[3].url;
+    searchURL5 = res.body.webPages.value[4].url;
+    sendMessage(
+    "\nPress 1 to view " + res.body.webPages.value[0].name + 
+    "\n\nPress 2 to view " + res.body.webPages.value[1].name + 
+    "\n\nPress 3 to view " + res.body.webPages.value[2].name + 
+    "\n\nPress 4 to view " + res.body.webPages.value[3].name + 
+    "\n\nPress 5 to view " + res.body.webPages.value[4].name, req, res)
+  });
 }

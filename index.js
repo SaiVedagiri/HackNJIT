@@ -347,7 +347,7 @@ async function chatBot(input, currentFromNum, req, res) {
 
   else if (state == "inWeather") {
     state = "default";
-    await makeRequestWeather(`api.openweathermap.org/data/2.5/weather?q=${input}&apikey=d4aba2f6472ab5c29ac2771336221dd8`, req, res);
+    await makeRequestWeather(`api.openweathermap.org/data/2.5/weather?q=brussels&apikey=d4aba2f6472ab5c29ac2771336221dd8`, req, res);
   }
 
   else if (state == "inDirections") {

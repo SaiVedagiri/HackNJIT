@@ -223,7 +223,8 @@ function chatBot(input, currentFromNum, req, res) {
     "\nPress 7 to translate text." +
     "\nPress 8 to get restaurant reccomendations." +
     "\nPress 9 to go to any url." +
-    "\nPress 10 for a gif." +   
+    "\nPress 10 for a gif."
+    , req, res   
   )
 }
 async function makeRequestGif(search, req, res) {

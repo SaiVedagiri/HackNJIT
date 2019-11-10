@@ -84,6 +84,9 @@ express()
       })
       .then(message => console.log(message.sid));
   })
+  .get('/', function (req, res) {
+    res.send("Welcome!");
+  })
   .get('/state', function (req, res) {
     res.send("State: " + state + "\nInput: " + myInput);
   })

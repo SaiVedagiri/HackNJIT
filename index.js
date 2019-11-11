@@ -80,13 +80,13 @@ express()
     res.send("Welcome!");
   })
   .get('/api', function (req, res) {
-    const accountSid = 'AC61eca8833f419fdc26e5ffa75b284891';
-    const authToken = '91bf82ff6ea981dfc77db8d5cb13ad4a';
+    const accountSid = 'ACa79a24b798f41ffa8f7cdbd2e9e4b4f5';
+    const authToken = 'ce2b1da8e10abee3dbe59834ca0cb48d';
     const client = require('twilio')(accountSid, authToken);
     client.messages
       .create({
         body: "Website Image",
-        from: '+12015847119',
+        from: '+12512202935',
         mediaUrl: ['https://textify.azurewebsites.net/output.png'],
         to: '+19179404729'
       })
